@@ -31,6 +31,8 @@ jobs:
         run: npm run build:web
       - name: Generate Android project
         run: npx cap add android
+      - name: Inject Android MediaStore plugin
+        run: node scripts/inject-android.mjs
       - name: Sync Capacitor
         run: npx cap sync android
       - name: Build debug APK
