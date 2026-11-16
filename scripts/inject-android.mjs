@@ -63,10 +63,10 @@ public class AstralMediaPlugin extends Plugin {
 const activityPath = new URL("java/" + pkg.replaceAll(".", "/") + "/MainActivity.java", base);
 let activity = await readFile(activityPath, "utf8");
 if (!activity.includes("registerPlugin(AstralMediaPlugin.class)")) {
- activity = activity.replace(/import [^;]+;\\n/g, m => m).replace(/(public class MainActivity extends BridgeActivity \\{)/, '$1\\n    @Override\\n    public void onCreate(android.os.Bundle savedInstanceState) {\\n        registerPlugin(AstralMediaPlugin.class);\\n        super.onCreate(savedInstanceState);\\n    }');
+ activity = activity.replace("public class MainActivity extends BridgeActivity {", "public class MainActivity extends BridgeActivity {\\n    @Override\\n    public void onCreate(android.os.Bundle savedInstanceState) {\\n        registerPlugin(AstralMediaPlugin.class);\\n        super.onCreate(savedInstanceState);\\n    }");
  await writeFile(activityPath, activity);
 }
 let updated = manifest;
-if (!updated.includes("android.permission.READ_MEDIA_VIDEO")) updated = updated.replace("<application", '<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />\\n    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />\\n    <application');
+if (!updated.includes("android.permission.READ_MEDIA_VIDEO")) updated = updated.replace("<application", '<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />\n    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />\n    <application');
 if (updated !== manifest) await writeFile(manifestPath, updated);
 console.log("Injected AstralMedia MediaStore plugin and permissions.");
