@@ -318,3 +318,56 @@ body{background:radial-gradient(ellipse at 12% -8%,rgba(155,123,255,.2),transpar
 .edit-info-form input{width:100%;height:46px;padding:0 13px;border:1px solid rgba(125,229,225,.22);border-radius:12px;background:rgba(255,255,255,.055);color:var(--text);font:600 14px "Manrope",sans-serif;outline:none}
 .edit-info-form input:focus{border-color:var(--aurora)}
 .edit-info-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:4px}
+
+
+/* AstralWorld · movimiento global y microinteracciones */
+#appContent{view-transition-name:astral-content}
+::view-transition-old(astral-content){animation:astralScreenOut .2s cubic-bezier(.4,0,.7,.2) both}
+::view-transition-new(astral-content){animation:astralScreenIn .38s cubic-bezier(.2,.75,.25,1) both}
+.page-enter{animation:astralScreenIn .38s cubic-bezier(.2,.75,.25,1) both}
+@keyframes astralDialogIn{from{opacity:0;transform:translateY(16px) scale(.96);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes astralDialogOut{to{opacity:0;transform:translateY(9px) scale(.98);filter:blur(3px)}}
+@keyframes astralMenuIn{from{opacity:0;transform:translateY(-8px) scale(.96);filter:blur(4px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes astralMenuOut{to{opacity:0;transform:translateY(-5px) scale(.97)}}
+@keyframes astralMiniOut{to{opacity:0;transform:translateY(18px) scale(.96);filter:blur(3px)}}
+@keyframes astralSearchIn{from{opacity:.65;transform:translateY(5px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes astralItemIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.icon-svg{width:20px;height:20px;display:block;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2.9;stroke-linecap:round;stroke-linejoin:round}
+.icon-button svg,.round-button svg,.collection-symbol svg,.favorites-teaser svg,.collection-arrow svg,.text-button svg,.media-thumb svg,.empty-icon svg,.primary-button svg,.player-action-menu svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.9;stroke-linecap:round;stroke-linejoin:round}
+.collection-symbol svg,.favorites-teaser svg{width:25px;height:25px}
+.collection-arrow svg{width:18px;height:18px}
+.text-button{display:inline-flex;align-items:center;gap:7px}
+.primary-button svg{width:17px;height:17px;stroke-width:3.2}
+.media-thumb{font-size:0}
+.media-thumb svg{width:26px;height:26px}
+.empty-state .empty-icon{display:grid;place-items:center}
+.empty-state .empty-icon svg{width:32px;height:32px;stroke-width:2.8}
+.favorites-teaser>span{display:grid;place-items:center;flex:0 0 34px}
+.icon-button svg{transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.icon-button:active svg{transform:scale(.86)}
+.search-field{transition:border-color .24s,box-shadow .24s,transform .28s cubic-bezier(.2,.8,.2,1)}
+.search-field:focus{border-color:var(--aurora);box-shadow:0 0 0 3px rgba(66,234,215,.12)}
+.search-field.is-opening{animation:astralSearchIn .38s cubic-bezier(.2,.75,.25,1) both}
+#editInfoDialog[open]{animation:astralDialogIn .26s cubic-bezier(.2,.75,.25,1) both}
+#editInfoDialog.is-closing{animation:astralDialogOut .17s ease both}
+#editInfoDialog::backdrop{animation:astralDialogIn .2s ease both}
+#playerActionMenu{transform-origin:top right;animation:astralMenuIn .22s cubic-bezier(.2,.75,.25,1) both}
+#playerActionMenu.is-closing{animation:astralMenuOut .16s ease both}
+#playerActionMenu svg{width:19px;height:19px}
+.mini-player{transition:opacity .22s,transform .22s,filter .22s}
+.mini-player.is-closing{animation:astralMiniOut .22s cubic-bezier(.4,0,.7,.2) both;pointer-events:none}
+.mini-close svg{width:18px;height:18px;stroke-width:3.2}
+.media-row,.cinema-card,.collection-feature,.favorites-teaser,.activity-row,.setting-row,.player-action{transition:transform .24s cubic-bezier(.2,.75,.25,1),background .24s,border-color .24s,box-shadow .24s}
+.media-row:active,.cinema-card:active,.collection-feature:active{transform:scale(.985)}
+.primary-button,.secondary-button,.mode-button,.player-action-menu button{transition:transform .22s cubic-bezier(.2,.75,.25,1),filter .22s,background .22s}
+.primary-button:active,.secondary-button:active,.mode-button:active{transform:scale(.97)}
+.content .media-row,.content .cinema-card,.content .activity-row{animation:astralItemIn .32s cubic-bezier(.2,.75,.25,1) both}
+.content .media-row:nth-child(2),.content .cinema-card:nth-child(2),.content .activity-row:nth-child(2){animation-delay:.035s}
+.content .media-row:nth-child(3),.content .cinema-card:nth-child(3),.content .activity-row:nth-child(3){animation-delay:.07s}
+.content .media-row:nth-child(4),.content .cinema-card:nth-child(4),.content .activity-row:nth-child(4){animation-delay:.105s}
+.content .media-row:nth-child(5),.content .cinema-card:nth-child(5),.content .activity-row:nth-child(5){animation-delay:.14s}
+@media(prefers-reduced-motion:reduce){
+ ::view-transition-old(astral-content),::view-transition-new(astral-content){animation:none}
+ .page-enter,#editInfoDialog[open],#editInfoDialog.is-closing,#playerActionMenu,#playerActionMenu.is-closing,.mini-player.is-closing,.search-field.is-opening,.content .media-row,.content .cinema-card,.content .activity-row{animation:none!important}
+ .mini-player{transition:none!important}
+}
