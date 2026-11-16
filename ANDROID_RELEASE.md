@@ -2,7 +2,7 @@
 
 ## Estado verificado del repositorio
 
-La base actual es una PWA de HTML/CSS/JavaScript. En la rama de preparación todavía no existe un directorio `android/`, configuración de Capacitor, proyecto Gradle ni almacén de firma de lanzamiento. Por eso esta documentación no afirma que exista ya un APK nativo.
+La base web usa HTML/CSS/JavaScript. Ya se añadieron `package.json`, `capacitor.config.json` y un script que prepara los recursos en `www/`. El flujo `.github/workflows/android-debug.yml` genera el proyecto Android durante GitHub Actions y compila un APK de depuración descargable como artefacto. El directorio `android/` generado no se guarda en el repositorio.
 
 ## Siguiente integración requerida
 
@@ -20,4 +20,5 @@ No subir una keystore ni contraseñas al repositorio. Cuando se prepare el flujo
 
 ## Importante
 
-La PWA actual puede importar archivos seleccionados por el usuario. No puede escanear por sí sola toda la biblioteca multimedia Android ni solicitar permisos nativos sin una capa Android. La detección Shorts/Películas de esta rama trabaja sobre los vídeos que ya forman parte de la biblioteca de AstralWorld.
+La PWA y el contenedor Capacitor pueden importar archivos mediante el selector del sistema. El contenedor actual todavía no implementa un escaneo completo de MediaStore. La detección Shorts/Películas trabaja sobre los vídeos que ya forman parte de la biblioteca de AstralWorld. Shorts incluye duraciones de hasta 60 segundos (incluido); Películas incluye 90 minutos o más.
+\n\n## Compilación de prueba\n\nEn GitHub, abre **Actions → Android debug APK → Run workflow**. Al terminar, descarga el artefacto `astralworld-android-debug`. Es un APK de depuración para pruebas, no una versión firmada de distribución.\n
