@@ -202,3 +202,36 @@ button:active,.cinema-card:active,.collection-feature:active{filter:brightness(1
 
 /* Biblioteca persistente y actividad reciente */
 .activity-preview,.activity-list{display:flex;flex-direction:column;gap:0;margin:0 2px 22px;border:1px solid rgba(181,230,213,.12);border-radius:17px;background:rgba(24,48,70,.28);overflow:hidden}.activity-row{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid rgba(181,230,213,.08)}.activity-row:last-child{border-bottom:0}.activity-dot{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:var(--aurora);box-shadow:0 0 12px rgba(101,201,194,.4)}.activity-row strong,.activity-row small{display:block}.activity-row strong{font-size:12px;font-weight:800;color:var(--text);overflow-wrap:anywhere}.activity-row small{margin-top:4px;color:var(--muted);font-size:10px}.activity-empty{padding:16px;margin:0;font-size:11px;color:var(--muted)}.activity-row-full{padding:16px}.activity-back{margin-bottom:22px}.library-toolbar{display:flex;gap:8px;align-items:center}.library-toolbar .search-field{flex:1;min-width:0}.library-toolbar .icon-button{flex:0 0 42px}
+
+
+/* Refinamiento de interacción · selección táctil sin destello azul */
+:root{--selection-glow:rgba(101,201,194,.13);--selection-line:rgba(181,230,213,.22)}
+#bottomNav{background:linear-gradient(155deg,rgba(23,43,64,.97),rgba(10,23,39,.98));border:1px solid rgba(181,230,213,.17);box-shadow:0 15px 38px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.07),inset 0 -1px 0 rgba(101,201,194,.045);backdrop-filter:blur(18px) saturate(1.18);-webkit-backdrop-filter:blur(18px) saturate(1.18)}
+#bottomNav .nav-item{position:relative;isolation:isolate;overflow:hidden;outline:0!important;-webkit-tap-highlight-color:transparent!important;tap-highlight-color:transparent;background:transparent!important;box-shadow:none;transform:translateZ(0);}
+#bottomNav .nav-item:before{content:"";position:absolute;z-index:-1;inset:4px 3px;border-radius:14px;background:linear-gradient(145deg,rgba(101,201,194,.19),rgba(181,230,213,.075) 48%,rgba(36,76,104,.13));border:1px solid rgba(181,230,213,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 4px 14px rgba(0,0,0,.12);opacity:0;transform:scale(.88);transition:opacity .24s var(--motion-soft),transform .38s var(--motion-spring)}
+#bottomNav .nav-item.active:before{opacity:1;transform:scale(1)}
+#bottomNav .nav-item:after{content:"";position:absolute;z-index:-1;left:50%;top:5px;width:22px;height:2px;border-radius:4px;background:var(--aurora);box-shadow:0 0 12px rgba(101,201,194,.55);opacity:0;transform:translateX(-50%) scaleX(.3);transition:opacity .22s ease,transform .36s var(--motion-spring)}
+#bottomNav .nav-item.active:after{opacity:1;transform:translateX(-50%) scaleX(1)}
+#bottomNav .nav-item .nav-icon,#bottomNav .nav-item .nav-label{position:relative;z-index:1}
+#bottomNav .nav-item .nav-icon svg{transition:transform .32s var(--motion-spring),filter .28s ease}
+#bottomNav .nav-item.active .nav-icon svg{transform:scale(1.09);filter:drop-shadow(0 2px 7px rgba(101,201,194,.3))}
+#bottomNav .nav-item:active{transform:scale(.96);transition-duration:.08s}
+#bottomNav .nav-item:focus,#bottomNav .nav-item:focus-visible{outline:none!important;box-shadow:none!important}
+button,.nav-item,.icon-button,.round-button,.player-action,.cinema-card-open,.collection-feature{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none;}
+button:focus:not(:focus-visible){outline:none!important;box-shadow:none}
+/* Portadas vivas: luz ambiental, órbitas y símbolo con movimiento sutil */
+.cinema-art{isolation:isolate;transform:translateZ(0);background-size:130% 130%;animation:coverAtmosphere 13s ease-in-out infinite alternate}
+.cinema-art:before{z-index:0;animation:coverOrbit 17s linear infinite;box-shadow:0 0 28px rgba(101,201,194,.11),inset 0 0 25px rgba(101,201,194,.045)}
+.cinema-art:after{z-index:0;animation:coverOrbit 23s linear infinite reverse;box-shadow:0 0 35px rgba(244,214,154,.075)}
+.cinema-art .art-symbol{z-index:1;animation:coverSymbol 4.8s ease-in-out infinite;filter:drop-shadow(0 0 13px rgba(244,214,154,.38))}
+.cinema-art small{z-index:2}
+.cinema-card{contain:layout paint;transform:translateZ(0)}
+@keyframes coverAtmosphere{0%{background-position:20% 35%;filter:saturate(.94)}100%{background-position:85% 65%;filter:saturate(1.12)}}
+@keyframes coverOrbit{0%{transform:rotate(0deg) scale(.96)}50%{transform:rotate(180deg) scale(1.04)}100%{transform:rotate(360deg) scale(.96)}}
+@keyframes coverSymbol{0%,100%{transform:translateY(0) scale(1);text-shadow:0 0 13px rgba(244,214,154,.25)}50%{transform:translateY(-4px) scale(1.08);text-shadow:0 0 25px rgba(244,214,154,.6)}}
+/* Transiciones ligeras: sin filtros de blur ni mediciones forzadas de layout */
+#appContent{view-transition-name:none;will-change:opacity,transform}
+.page-enter{animation:astralFastEnter .27s var(--motion-soft) both}
+@keyframes astralFastEnter{from{opacity:0;transform:translate3d(0,7px,0) scale(.995)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+::view-transition-group(astral-screen),::view-transition-old(astral-screen),::view-transition-new(astral-screen){animation:none!important}
+@media(prefers-reduced-motion:reduce){.cinema-art,.cinema-art:before,.cinema-art:after,.cinema-art .art-symbol{animation:none!important}#appContent{will-change:auto}}
