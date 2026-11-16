@@ -303,3 +303,5 @@ body{background:radial-gradient(ellipse at 12% -8%,rgba(155,123,255,.2),transpar
 .player-page:fullscreen #fullscreenToggle,.player-page:-webkit-full-screen #fullscreenToggle{display:none!important}
 .player-page:fullscreen .fullscreen-exit,.player-page:-webkit-full-screen .fullscreen-exit{display:grid!important}
 .mini-expand svg{width:17px;height:17px}
+
+.nav-icon svg,.icon-button svg,.round-button svg{stroke-width:3.1;stroke-linecap:round;stroke-linejoin:round}
