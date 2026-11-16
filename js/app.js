@@ -115,7 +115,7 @@ if("serviceWorker"in navigator&&location.protocol.startsWith("http")){
 
 
 const astralCoverUrlCache=new Map();
-function astralCoverSrc(v){if(!v.cover)return '';if(!astralCoverUrlCache.has(v.id))astralCoverUrlCache.set(v.id,astralCoverSrc(v));return astralCoverUrlCache.get(v.id);}
+function astralCoverSrc(v){if(!v.cover)return '';if(!astralCoverUrlCache.has(v.id))astralCoverUrlCache.set(v.id,URL.createObjectURL(v.cover));return astralCoverUrlCache.get(v.id);}
 function editCurrentInfo(){
  const v=state.currentVideo;if(!v)return;
  document.getElementById("editInfoDialog")?.remove();
@@ -134,12 +134,12 @@ function editCurrentInfo(){
 }
 
 /* AstralWorld 1.00 · clasificación y ajustes móviles */
-const ASTRAL_SHORT_MAX=3*60, ASTRAL_MOVIE_MIN=90*60;
+const ASTRAL_SHORT_MAX=60, ASTRAL_MOVIE_MIN=90*60;
 navIcons.shorts='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8l5 18H3L8 3Z"/><path d="m10 9 5 3-5 3V9Z"/></svg>';
 function shorts(){
  const items=state.videos.filter(v=>v.duration>0&&v.duration<=ASTRAL_SHORT_MAX);
- return '<span class="eyebrow">ASTRALWORLD · VÍDEOS CORTOS</span><h1>Shorts</h1><p class="page-intro">Clips de hasta 3 minutos detectados en tu biblioteca.</p>'+
- (items.length?'<div class="shorts-feed">'+items.map(v=>'<button class="short-card" data-video="'+v.id+'" type="button"><span class="short-card-art">'+(v.cover?'<img src="'+URL.createObjectURL(v.cover)+'" alt="">':'<span>▶</span>')+'</span><span class="short-card-copy"><strong>'+esc(v.name)+'</strong><small>'+time(v.duration)+' · Short</small></span></button>').join('')+'</div>':empty(svgPlay,'Aún no hay Shorts','Añade vídeos de hasta 3 minutos a tu biblioteca y aparecerán aquí.','<button class="primary-button" data-action="add" type="button">'+svgAdd+' Añadir vídeos</button>'))+
+ return '<span class="eyebrow">ASTRALWORLD · VÍDEOS CORTOS</span><h1>Shorts</h1><p class="page-intro">Clips de hasta 1 minuto detectados en tu biblioteca.</p>'+
+ (items.length?'<div class="shorts-feed">'+items.map(v=>'<button class="short-card" data-video="'+v.id+'" type="button"><span class="short-card-art">'+(v.cover?'<img src="'+astralCoverSrc(v)+'" alt="">':'<span>▶</span>')+'</span><span class="short-card-copy"><strong>'+esc(v.name)+'</strong><small>'+time(v.duration)+' · Short</small></span></button>').join('')+'</div>':empty(svgPlay,'Aún no hay Shorts','Añade vídeos de hasta 1 minuto a tu biblioteca y aparecerán aquí.','<button class="primary-button" data-action="add" type="button">'+svgAdd+' Añadir vídeos</button>'))+
  '<p class="library-footnote">Shorts clasifica los vídeos importados a tu biblioteca; no explora todo el almacenamiento del teléfono.</p>';
 }
 function movies(){
