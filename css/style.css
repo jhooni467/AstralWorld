@@ -101,3 +101,64 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .nav-item.active .nav-icon{color:var(--aurora);filter:drop-shadow(0 0 5px rgba(101,201,194,.22))}
 .nav-label{line-height:1.1}
 @media(min-width:700px){.bottom-nav{width:calc(100% - 28px);max-width:490px}.app-shell{padding-bottom:calc(106px + env(safe-area-inset-bottom))}}
+
+/* AstralWorld · renovación visual cinematográfica */
+:root{font-family:"Manrope",sans-serif;--font-display:"Sora","Manrope",sans-serif;--line:rgba(181,230,213,.11);--muted:#B6C5CE}
+body{background:radial-gradient(ellipse at 50% -18%,rgba(101,201,194,.09),transparent 34rem),#0c192b;letter-spacing:-.12px}
+h1,h2,.brand,.cinema-hero h1,.online-hero h1{font-family:var(--font-display);letter-spacing:-.8px}
+h1{font-weight:700;line-height:1.08}h2{font-weight:700}p{line-height:1.65;color:#B7C7D0}
+.eyebrow,.hero-kicker,.feature-kicker,.player-kicker,.player-eyebrow{font-family:var(--font-display);font-weight:700;letter-spacing:1.5px}
+.content{padding-top:23px}
+.cinema-hero,.home-welcome,.online-hero{border-color:rgba(181,230,213,.12);box-shadow:0 18px 48px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035)}
+.cinema-hero{background:radial-gradient(ellipse at 80% 20%,rgba(101,201,194,.17),transparent 38%),linear-gradient(150deg,#203e59 0%,#152c45 52%,#0b1728 100%)}
+.cinema-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:0;overflow:visible;scroll-snap-type:none}
+.cinema-card{width:100%;max-width:none;min-width:0}.cinema-art{height:auto;aspect-ratio:1.38}
+.cinema-card-copy strong{font-size:12px;font-weight:800}.section-head{margin-top:26px}
+.bottom-nav{background:rgba(10,23,39,.96);border-color:rgba(181,230,213,.14);box-shadow:0 12px 36px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.04)}
+.nav-icon svg{stroke-width:2.6}.nav-item{font-weight:800}
+.player-page{padding:0 0 26px}.player-topline{min-height:58px;padding:0 17px 12px}
+.player-back,.player-more{display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--mint);font:800 12px "Manrope",sans-serif;cursor:pointer}
+.player-icon,.player-more{display:grid;place-items:center}
+.player-icon svg,.player-more svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.player-more{width:38px;height:38px;border-radius:50%;background:rgba(101,201,194,.09)}
+.player-kicker{font-size:9px;color:var(--muted)}
+.video-stage{aspect-ratio:16/9;border-radius:0 0 22px 22px;box-shadow:0 22px 48px rgba(0,0,0,.38);background:#03080e}
+.video-stage video{background:#03080e}
+.video-overlay{padding:15px 16px 13px;background:linear-gradient(180deg,rgba(3,8,14,.35),transparent 28%,transparent 55%,rgba(3,8,14,.78))}
+.playing-label{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.8);font:800 9px "Manrope",sans-serif;letter-spacing:1.3px}
+.playing-label i{width:7px;height:7px;border-radius:50%;background:var(--aurora);box-shadow:0 0 12px var(--aurora)}
+.video-overlay button{width:42px;height:42px;background:rgba(7,17,28,.66);border:1px solid rgba(255,255,255,.12)}
+.video-overlay button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.video-overlay-center{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.video-overlay-center .hero-play-button{pointer-events:auto;width:62px;height:62px;border-radius:50%;background:rgba(10,26,42,.76);border:1px solid rgba(181,230,213,.38);box-shadow:0 8px 28px rgba(0,0,0,.35),0 0 28px rgba(101,201,194,.13);backdrop-filter:blur(12px)}
+.video-overlay-center .hero-play-button svg{width:26px;height:26px;stroke-width:2.6}
+.video-overlay-bottom{display:block}.player-control-line{gap:10px;font:700 10px "Manrope",sans-serif;color:#fff}
+.player-control-line input{accent-color:var(--aurora);height:4px;cursor:pointer}
+.video-tools{display:flex;justify-content:flex-end;margin-top:7px}.video-tools button{width:34px;height:34px}
+.player-details{padding:23px 18px 0}.player-eyebrow{font-size:8px;color:var(--aurora)}
+.player-details h1{font-size:22px;line-height:1.22;margin:8px 0 7px;overflow-wrap:anywhere}
+.player-meta{font-size:11px;color:var(--muted);font-weight:600}.player-meta span{padding:0 4px;color:var(--aurora)}
+.player-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow:visible;padding:19px 18px 4px}
+.player-action{min-width:0;min-height:52px;justify-content:flex-start;gap:11px;padding:0 14px;border-radius:15px;background:linear-gradient(145deg,rgba(36,76,104,.43),rgba(19,38,60,.55));border-color:rgba(181,230,213,.13);color:#E8F3F1;font:800 11px "Manrope",sans-serif}
+.player-action .action-icon{display:grid;place-items:center;width:28px;height:28px;flex:0 0 28px;border-radius:9px;background:rgba(101,201,194,.11);color:var(--aurora)}
+.player-action svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.player-info{margin:20px 18px 0;padding:18px;border-radius:18px;background:linear-gradient(145deg,rgba(36,76,104,.32),rgba(15,31,50,.58));border:1px solid rgba(181,230,213,.12)}
+.player-info h2{font-size:14px;margin:0 0 12px}.info-line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid rgba(181,230,213,.09);font-size:11px}
+.info-line span{color:var(--muted)}.info-line strong{color:var(--text);font-weight:800;text-align:right}
+.video-placeholder{background:radial-gradient(ellipse at center,rgba(36,76,104,.38),#050d18 74%)}
+.video-placeholder strong{font-family:var(--font-display);font-size:14px}
+.player-page:fullscreen,.player-page:-webkit-full-screen{height:100dvh;width:100vw;max-width:none;display:flex;flex-direction:column;justify-content:center;background:#02060b}
+.player-page:fullscreen .video-stage,.player-page:-webkit-full-screen .video-stage{width:100vw;height:100dvh;max-height:100dvh;aspect-ratio:auto;border-radius:0;box-shadow:none}
+.player-page:fullscreen .video-overlay,.player-page:-webkit-full-screen .video-overlay{padding:22px 24px calc(18px + env(safe-area-inset-bottom))}
+.player-page:fullscreen .video-overlay-center .hero-play-button,.player-page:-webkit-full-screen .video-overlay-center .hero-play-button{width:70px;height:70px}
+.player-page:fullscreen .video-overlay-bottom,.player-page:-webkit-full-screen .video-overlay-bottom{max-width:850px;width:100%;margin:0 auto}
+.player-page:fullscreen .video-tools,.player-page:-webkit-full-screen .video-tools{margin-top:12px}
+.player-page:fullscreen .video-tools button,.player-page:-webkit-full-screen .video-tools button{width:44px;height:44px}
+.player-page:fullscreen .video-overlay-top,.player-page:-webkit-full-screen .video-overlay-top{max-width:850px;width:100%;margin:0 auto}
+.player-page:fullscreen .video-overlay-top button,.player-page:-webkit-full-screen .video-overlay-top button{width:46px;height:46px}
+button,.nav-item,.player-action{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html,body{overscroll-behavior-y:none}body{overscroll-behavior-x:none}
+.cinema-rail,.player-actions{touch-action:pan-y}
+*{scrollbar-width:none}*::-webkit-scrollbar{display:none}
+@media(max-width:370px){.player-action{padding:0 10px;font-size:10px}.player-details h1{font-size:20px}.cinema-rail{gap:9px}}
+@media(min-width:700px){.player-page{max-width:520px}.player-details{padding-left:0;padding-right:0}.player-actions{padding-left:0;padding-right:0}.player-info{margin-left:0;margin-right:0}}
