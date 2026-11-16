@@ -7,7 +7,7 @@ Reproductor audiovisual móvil para organizar y reproducir vídeos locales, con 
 ## Experiencia
 
 - **Explora:** acceso a la colección y a las secciones de contenido.
-- **Biblioteca:** vídeos importados desde el dispositivo.
+- **Biblioteca:** vídeos importados desde el dispositivo; en Android nativo, consulta de vídeos mediante MediaStore y permiso multimedia.
 - **Shorts:** clasificación automática de vídeos de hasta 1 minuto.
 - **Películas:** colección disponible desde Explora para vídeos de 90 minutos o más.
 - **Reproductor:** reproducción local, pantalla completa, control de progreso, velocidad y mini reproductor.
@@ -25,7 +25,7 @@ La app clasifica los vídeos que el usuario importa o selecciona en AstralWorld:
 | Películas | 90 minutos o más |
 | Vídeos | Resto de duraciones |
 
-La clasificación utiliza metadatos locales y no mueve ni duplica los archivos originales. La versión web/PWA no escanea automáticamente todo el almacenamiento Android: el usuario debe seleccionar los vídeos. La integración MediaStore nativa requiere el proyecto Android/Capacitor.
+La clasificación utiliza metadatos locales y no mueve ni duplica los archivos originales. La versión web/PWA no escanea automáticamente el almacenamiento Android: el usuario debe seleccionar los vídeos. En la compilación Android, el botón de escaneo solicita permiso de vídeos y consulta MediaStore. Los elementos se guardan como referencias al contenido del dispositivo; si un archivo se mueve o elimina, puede dejar de estar disponible.
 
 ## Tecnología actual
 
