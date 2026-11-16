@@ -405,3 +405,9 @@ body{background:radial-gradient(ellipse at 12% -8%,rgba(155,123,255,.2),transpar
 .cover-editor-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}
 @media(max-width:370px){.settings-panel{padding-left:11px;padding-right:11px}.settings-group-icon{width:35px;height:35px;flex-basis:35px}}
 @media(prefers-reduced-motion:reduce){.settings-group{animation:none}}
+
+/* Portadas personalizadas también en las tarjetas de Explora */
+.cinema-art{position:relative;overflow:hidden}
+.cinema-cover-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.cinema-art:has(.cinema-cover-image):before,.cinema-art:has(.cinema-cover-image):after{z-index:1;pointer-events:none}
+.cinema-art:has(.cinema-cover-image) small{position:relative;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.8)}
