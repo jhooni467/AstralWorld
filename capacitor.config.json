@@ -1,0 +1,9 @@
+{
+  "appId": "com.astralworld.app",
+  "appName": "AstralWorld",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "backgroundColor": "#0b1025"
+  }
+}
