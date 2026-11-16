@@ -247,3 +247,52 @@ button:focus:not(:focus-visible){outline:none!important;box-shadow:none}
 #bottomNav .nav-item.active .nav-label{color:#ffffff;transform:translateY(-.5px);font-weight:750}
 #bottomNav .nav-item:before{pointer-events:none}
 @media(prefers-reduced-motion:reduce){::view-transition-group(astral-screen),::view-transition-old(astral-screen),::view-transition-new(astral-screen){animation:none!important}}
+
+
+/* AstralWorld · nueva paleta: Electric Aurora */
+:root{--night:#0b1025;--steel:#293b78;--aurora:#42ead7;--mint:#b8f5e9;--solar:#ffb86b;--text:#f7f6ff;--muted:#b4bfdf;--line:rgba(156,174,255,.2);--violet:#9b7bff}
+html,body{background-color:var(--night)}
+body{background:radial-gradient(ellipse at 12% -8%,rgba(155,123,255,.2),transparent 34rem),radial-gradient(ellipse at 92% 12%,rgba(66,234,215,.14),transparent 30rem),linear-gradient(155deg,#0b1025 0%,#111b3d 55%,#0a142b 100%);color:var(--text)}
+.topbar{background:rgba(12,18,43,.88);border-color:rgba(155,123,255,.17)}
+.brand-mark{color:var(--solar);text-shadow:0 0 20px rgba(255,184,107,.5)}
+.eyebrow,.text-button,.player-eyebrow{color:var(--aurora)}
+.cinema-hero{background:radial-gradient(ellipse at 82% 18%,rgba(66,234,215,.28),transparent 40%),radial-gradient(ellipse at 14% 90%,rgba(155,123,255,.24),transparent 44%),linear-gradient(145deg,#293b78 0%,#192858 48%,#10152f 100%);border-color:rgba(155,123,255,.28)}
+.online-hero{background:radial-gradient(ellipse at 85% 15%,rgba(255,184,107,.18),transparent 40%),linear-gradient(145deg,#303b79,#171c42 70%,#11152f)}
+.bottom-nav,#bottomNav{border-color:rgba(155,123,255,.22)}
+.primary-button{background:linear-gradient(110deg,#4a6dff,#7b63ef 55%,#27bfae);box-shadow:0 8px 24px rgba(67,91,255,.25)}
+.player-action{background:linear-gradient(140deg,rgba(47,65,132,.62),rgba(24,37,79,.74));border-color:rgba(155,123,255,.2)}
+.player-action .action-icon{background:rgba(66,234,215,.13);color:var(--aurora)}
+.player-info{background:linear-gradient(145deg,rgba(42,59,120,.45),rgba(18,27,58,.78));border-color:rgba(155,123,255,.2)}
+.video-stage{box-shadow:0 22px 55px rgba(0,0,0,.46),0 0 28px rgba(66,234,215,.08)}
+/* Barra de reproducción más ancha y limpia */
+.player-control-line{gap:12px;font-size:11px;font-weight:800}
+.player-control-line input[type=range]{appearance:none;-webkit-appearance:none;width:100%;height:7px;border-radius:99px;background:linear-gradient(90deg,var(--aurora),#8c78ff);outline:none;overflow:visible}
+.player-control-line input[type=range]::-webkit-slider-runnable-track{height:7px;border-radius:99px;background:linear-gradient(90deg,var(--aurora),#8c78ff)}
+.player-control-line input[type=range]::-moz-range-track{height:7px;border-radius:99px;background:linear-gradient(90deg,var(--aurora),#8c78ff)}
+.player-control-line input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;margin-top:-3px;border-radius:50%;background:#fff;border:2px solid var(--aurora);box-shadow:0 0 0 3px rgba(66,234,215,.16),0 0 12px rgba(66,234,215,.55)}
+.player-control-line input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--aurora);box-shadow:0 0 0 3px rgba(66,234,215,.16)}
+/* Iconografía bold */
+.player-page svg,.video-overlay svg,.player-action svg,.mini-player svg{stroke-width:3.1;stroke-linecap:round;stroke-linejoin:round}
+.video-overlay button{border-color:rgba(184,245,233,.25);background:rgba(13,20,45,.78);box-shadow:0 5px 18px rgba(0,0,0,.22)}
+.video-overlay-center .hero-play-button{background:linear-gradient(145deg,rgba(54,80,166,.9),rgba(17,37,70,.94));border:1.5px solid rgba(66,234,215,.55);box-shadow:0 8px 30px rgba(0,0,0,.38),0 0 28px rgba(66,234,215,.2)}
+/* Sin punto decorativo en la navegación */
+#bottomNav .nav-item:after,#bottomNav .nav-item.active:after{content:none!important;display:none!important}
+/* Controles exclusivos de pantalla completa */
+.fullscreen-exit{display:none!important}
+.player-page:fullscreen .fullscreen-exit,.player-page:-webkit-full-screen .fullscreen-exit{display:grid!important}
+.player-page:fullscreen .video-overlay-top,.player-page:-webkit-full-screen .video-overlay-top{align-items:center}
+.player-page:fullscreen .video-overlay-top button,.player-page:-webkit-full-screen .video-overlay-top button{display:grid;place-items:center}
+.player-page:fullscreen .video-overlay-bottom,.player-page:-webkit-full-screen .video-overlay-bottom{padding-bottom:env(safe-area-inset-bottom)}
+/* Mini reproductor persistente al navegar fuera del player */
+.mini-player{position:fixed;z-index:80;left:12px;right:12px;bottom:calc(82px + env(safe-area-inset-bottom));min-height:68px;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:19px;border:1px solid rgba(125,229,225,.34);background:linear-gradient(115deg,rgba(31,48,104,.98),rgba(17,54,82,.98) 58%,rgba(24,38,79,.98));box-shadow:0 14px 38px rgba(0,0,0,.42),0 0 22px rgba(66,234,215,.12),inset 0 1px 0 rgba(255,255,255,.12);backdrop-filter:blur(18px) saturate(1.25);-webkit-backdrop-filter:blur(18px) saturate(1.25);animation:miniPlayerIn .32s var(--motion-spring) both}
+@keyframes miniPlayerIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.mini-video-slot{position:relative;width:82px;height:48px;flex:0 0 82px;overflow:hidden;border-radius:10px;background:#030812}
+.mini-video-slot video{display:block;width:100%;height:100%;object-fit:cover}
+.mini-info{min-width:0;flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:4px 0;border:0;background:none;text-align:left}
+.mini-info strong{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:850;color:#fff}
+.mini-info small{font-size:9px;color:#b9d9e5}
+.mini-control{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border:1px solid rgba(184,245,233,.2);border-radius:50%;background:rgba(255,255,255,.08);color:#fff}
+.mini-control svg{width:19px;height:19px;fill:none;stroke:currentColor}
+.mini-close{font-size:24px;font-weight:500;line-height:1}
+@media(max-width:370px){.mini-player{left:8px;right:8px;gap:7px;padding:7px}.mini-video-slot{width:70px;flex-basis:70px}.mini-control{width:34px;height:34px;flex-basis:34px}}
+@media(prefers-reduced-motion:reduce){.mini-player{animation:none}}
