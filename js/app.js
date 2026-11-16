@@ -1,117 +1,31 @@
-const state = { mode: "local", page: "explore" };
-const content = document.getElementById("appContent");
-const nav = document.getElementById("bottomNav");
-
-const navItems = {
-  local: [
-    { id: "explore", label: "Explora", icon: "✧" },
-    { id: "library", label: "Biblioteca", icon: "▤" },
-    { id: "settings", label: "Ajustes", icon: "⚙" }
-  ],
-  online: [
-    { id: "home", label: "Inicio", icon: "⌂" },
-    { id: "profile", label: "Perfil", icon: "◉" },
-    { id: "settings", label: "Ajustes", icon: "⚙" }
-  ]
-};
-
-function renderNav() {
-  nav.innerHTML = navItems[state.mode].map(item => `
-    <button class="nav-item ${state.page === item.id ? "active" : ""}" data-page="${item.id}">
-      <span class="nav-icon">${item.icon}</span><span>${item.label}</span>
-    </button>`).join("");
-  nav.querySelectorAll("[data-page]").forEach(button => {
-    button.addEventListener("click", () => { state.page = button.dataset.page; render(); });
-  });
-}
-
-function explorePage() {
-  return `
-    <section class="hero">
-      <span class="eyebrow">Tu espacio audiovisual</span>
-      <h1>Explora nuevos mundos.</h1>
-      <p>Organiza tus vídeos y descubre contenido desde una experiencia hecha para AstralWorld.</p>
-    </section>
-    <div class="section-head"><h2>Tu espacio</h2><span class="pill">Modo Local</span></div>
-    <div class="action-grid">
-      <button class="action-card" data-page="library"><span class="action-icon">▤</span><strong>Biblioteca</strong><small>Tus vídeos en un solo lugar</small></button>
-      <button class="action-card" data-page="settings"><span class="action-icon">⚙</span><strong>Personalizar</strong><small>Configura AstralWorld</small></button>
-    </div>
-    <div class="section-head"><h2>Para comenzar</h2></div>
-    <div class="empty-card"><div class="empty-symbol">✧</div><strong>Tu biblioteca está esperando</strong><p>La importación de vídeos llegará en una próxima etapa.</p></div>`;
-}
-
-function libraryPage() {
-  return `
-    <span class="eyebrow">Modo Local</span><h1>Biblioteca</h1>
-    <p>Todo tu contenido, organizado en un mismo lugar.</p>
-    <input class="search-field" type="search" placeholder="Buscar en tu biblioteca" aria-label="Buscar en tu biblioteca">
-    <div class="empty-card" style="margin-top:20px"><div class="empty-symbol">▤</div><strong>Aún no hay vídeos</strong><p>Más adelante podrás importar y organizar tus archivos de vídeo.</p></div>`;
-}
-
-function onlineHomePage() {
-  return `
-    <span class="eyebrow">Modo Online</span><h1>Descubre contenido.</h1>
-    <p>Un espacio para explorar vídeos y encontrar algo nuevo.</p>
-    <input class="search-field" type="search" placeholder="Buscar vídeos" aria-label="Buscar vídeos">
-    <div class="section-head"><h2>Explorar</h2><span class="pill">Próximamente</span></div>
-    <div class="empty-card"><div class="empty-symbol">✧</div><strong>Estamos preparando esta sección</strong><p>La búsqueda y reproducción online se desarrollarán en una siguiente etapa.</p></div>`;
-}
-
-function profilePage() {
-  return `
-    <span class="eyebrow">Modo Online</span><h1>Perfil</h1>
-    <div class="empty-card"><div class="empty-symbol">◉</div><strong>Tu espacio personal</strong><p>Las opciones de perfil estarán disponibles más adelante.</p></div>`;
-}
-
-function settingsPage() {
-  return `
-    <span class="eyebrow">Personalización</span><h1>Ajustes</h1>
-    <h2 style="margin-top:26px">Modo de app</h2>
-    <div class="setting-card"><div><strong>Experiencia de AstralWorld</strong><p>Cambia entre tu contenido local y la experiencia online.</p></div><span class="pill">${state.mode === "local" ? "Local" : "Online"}</span></div>
-    <div class="mode-switch">
-      <button class="mode-button ${state.mode === "local" ? "active" : ""}" data-mode="local">Local</button>
-      <button class="mode-button ${state.mode === "online" ? "active" : ""}" data-mode="online">Online</button>
-    </div>
-    <h2 style="margin-top:30px">Apariencia</h2>
-    <div class="setting-card"><div><strong>Aurora Celestial</strong><p>Azul noche, turquesa aurora, menta y dorado.</p></div><span class="pill">Tema actual</span></div>
-    <h2 style="margin-top:30px">Aplicación</h2>
-    <div class="setting-card"><div><strong>AstralWorld</strong><p>Primera base · Versión 0.1</p></div><span class="pill">Inicial</span></div>`;
-}
-
-function render() {
-  const pages = {
-    explore: explorePage,
-    library: libraryPage,
-    home: onlineHomePage,
-    profile: profilePage,
-    settings: settingsPage
-  };
-  if (!navItems[state.mode].some(item => item.id === state.page)) {
-    state.page = state.mode === "local" ? "explore" : "home";
-  }
-  content.innerHTML = pages[state.page]();
-  content.querySelectorAll("[data-page]").forEach(button => {
-    button.addEventListener("click", () => { state.page = button.dataset.page; render(); });
-  });
-  content.querySelectorAll("[data-mode]").forEach(button => {
-    button.addEventListener("click", () => {
-      state.mode = button.dataset.mode;
-      state.page = state.mode === "local" ? "explore" : "home";
-      render();
-    });
-  });
-  renderNav();
-}
-
-document.getElementById("headerAction").addEventListener("click", () => {
-  const field = content.querySelector('input[type="search"]');
-  if (field) field.focus();
-  else { state.page = state.mode === "local" ? "library" : "home"; render(); content.querySelector('input[type="search"]')?.focus(); }
-});
-
+const state={mode:"local",page:"explore",videos:[],currentVideo:null,lastPage:"library"};
+const content=document.getElementById("appContent"),nav=document.getElementById("bottomNav"),picker=document.getElementById("videoPicker");
+let activeUrl=null,overlayTimer=null;
+const navItems={local:[{id:"explore",label:"Explora",icon:"✧"},{id:"library",label:"Biblioteca",icon:"▤"},{id:"settings",label:"Ajustes",icon:"⚙"}],online:[{id:"home",label:"Inicio",icon:"⌂"},{id:"profile",label:"Perfil",icon:"◉"},{id:"settings",label:"Ajustes",icon:"⚙"}]};
+const svgPlay='<svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"></path></svg>';
+const svgExpand='<svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"></path></svg>';
+const svgBack='<svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg>';
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function time(s){if(!Number.isFinite(s))return"0:00";const n=Math.floor(s),h=Math.floor(n/3600),m=Math.floor(n%3600/60),r=n%60;return h?h+":"+String(m).padStart(2,"0")+":"+String(r).padStart(2,"0"):m+":"+String(r).padStart(2,"0");}
+function kind(v){return v.duration>5400?"Película":"Vídeo";}
+function empty(icon,title,desc,extra=""){return '<div class="empty-state"><div class="empty-icon">'+icon+'</div><strong>'+title+'</strong><p>'+desc+'</p>'+extra+'</div>';}
+function list(items){return '<div class="media-list">'+items.map(v=>'<button class="media-row" data-video="'+v.id+'" type="button" style="width:100%;text-align:left;color:inherit"><span class="media-thumb">▣</span><span class="media-copy"><span class="tag">'+kind(v)+'</span><strong>'+esc(v.name)+'</strong><small>'+time(v.duration)+' · Archivo local</small></span></button>').join("")+'</div>';}
+function explore(){const latest=state.videos[state.videos.length-1];return '<section class="cinema-feature"><span class="feature-kicker">TU ESPACIO AUDIOVISUAL</span><h2>Tu cine. Tus historias.</h2><p>Una experiencia creada alrededor de tus películas y vídeos, guardados en tu propio dispositivo.</p><button class="primary-button" data-action="add" type="button">＋ Añadir vídeo</button></section><div class="section-head"><h2>Continuar viendo</h2><button class="text-button" data-page="library" type="button">Biblioteca →</button></div>'+(latest?'<button class="resume-strip" data-video="'+latest.id+'" type="button" style="width:100%;text-align:left;color:inherit"><span class="resume-art">▣</span><span class="resume-copy"><strong>'+esc(latest.name)+'</strong><small>'+kind(latest)+' · '+time(latest.duration)+'</small><span class="progress-track"><span style="width:0"></span></span></span></button>':empty("▷","Tu próxima historia empieza aquí","Añade un vídeo para verlo desde AstralWorld."))+'<div class="section-head"><h2>Tu colección</h2></div><div class="library-shortcuts"><button class="shortcut" data-filter="movies" type="button"><span class="shortcut-icon">▣</span><strong>Películas</strong><small>Más de 90 minutos</small></button><button class="shortcut" data-page="library" type="button"><span class="shortcut-icon">▶</span><strong>Vídeos</strong><small>Tu colección audiovisual</small></button></div><div class="section-head"><h2>Vistos recientemente</h2><button class="text-button" data-page="library" type="button">Ver todo →</button></div>'+(state.videos.length?list(state.videos.slice().reverse().slice(0,3)):empty("◷","Todavía no hay reproducciones","Tus archivos aparecerán aquí cuando añadas vídeos."));}
+function library(){return '<span class="eyebrow">TU COLECCIÓN PERSONAL</span><h1>Biblioteca</h1><p class="page-intro">Tus películas y vídeos, reunidos en un solo lugar.</p><div class="library-toolbar"><input class="search-field" id="librarySearch" type="search" placeholder="Buscar en tu biblioteca" aria-label="Buscar en tu biblioteca"><button class="icon-button" data-action="add" type="button" aria-label="Añadir vídeo">＋</button></div><div class="section-head"><h2>Todo el contenido</h2><span class="tag">'+state.videos.length+' archivos</span></div><div id="libraryResults">'+(state.videos.length?list(state.videos.slice().reverse()):empty("▤","Tu biblioteca está vacía","Añade archivos de vídeo desde tu dispositivo para empezar.",'<button class="primary-button" data-action="add" type="button">＋ Añadir vídeos</button>'))+'</div>';}
+function settings(){return '<span class="eyebrow">PERSONALIZACIÓN</span><h1>Ajustes</h1><div class="section-head"><h2>Modo de app</h2></div><div class="setting-row"><div><strong>Experiencia de AstralWorld</strong><p>Cambia entre contenido local y online.</p></div><span class="tag">'+(state.mode==="local"?"Local":"Online")+'</span></div><div class="mode-switch"><button class="mode-button '+(state.mode==="local"?"active":"")+'" data-mode="local" type="button">Local</button><button class="mode-button '+(state.mode==="online"?"active":"")+'" data-mode="online" type="button">Online</button></div><div class="section-head"><h2>Apariencia</h2></div><div class="setting-row"><div><strong>Aurora Celestial</strong><p>Azul noche, turquesa, menta y dorado.</p></div><span class="tag">Actual</span></div><div class="section-head"><h2>Reproducción</h2></div><div class="setting-row"><div><strong>Orientación cinematográfica</strong><p>Expandir solicita pantalla completa y giro horizontal cuando el dispositivo lo permite.</p></div></div><div class="section-head"><h2>Aplicación</h2></div><div class="setting-row"><div><strong>AstralWorld</strong><p>Interfaz móvil · Versión 0.2</p></div><span class="tag">En desarrollo</span></div>';}
+function online(){return '<span class="eyebrow">MODO ONLINE</span><h1>Descubre.</h1><p class="page-intro">La experiencia online tendrá su propio reproductor y sistema de recomendaciones.</p>'+empty("✧","Estamos preparando esta experiencia","El diseño y las funciones online se desarrollarán por separado.");}
+function player(){const v=state.currentVideo;return '<section class="player-page" id="playerPage"><div class="player-topline"><button data-action="back" type="button">← Biblioteca</button><span class="eyebrow">ASTRAL PLAYER</span><button data-action="menu" type="button">•••</button></div><div class="video-stage" id="videoStage"><video id="mainVideo" playsinline preload="metadata"></video><div class="video-placeholder" id="videoPlaceholder"><span class="placeholder-symbol">✦</span><strong>Preparando reproducción</strong><span>Tu espacio cinematográfico</span></div><div class="video-overlay" id="videoOverlay"><div class="video-overlay-top"><button data-action="back" aria-label="Volver" type="button">'+svgBack+'</button><button data-action="menu" aria-label="Más opciones" type="button">•••</button></div><div class="video-overlay-bottom"><button data-action="toggle" aria-label="Reproducir o pausar" id="playToggle" type="button">'+svgPlay+'</button><div class="player-control-line"><span id="currentTime">0:00</span><input id="seekBar" type="range" min="0" max="100" value="0" aria-label="Posición del vídeo"><span id="totalTime">0:00</span></div><button data-action="expand" aria-label="Expandir a horizontal" type="button">'+svgExpand+'</button></div></div></div><div class="player-details"><h1>'+esc(v.name)+'</h1><p class="player-meta">'+kind(v)+' · Archivo local · '+time(v.duration)+'</p></div><div class="player-actions"><button class="player-action" data-action="subtitles" type="button">CC&nbsp; Subtítulos</button><button class="player-action" data-action="audio" type="button">♫&nbsp; Audio</button><button class="player-action" data-action="speed" type="button">1×&nbsp; Velocidad</button><button class="player-action" data-action="expand" type="button">⛶&nbsp; Expandir</button></div><div class="player-info"><h2>Información del archivo</h2><p>Tipo: '+kind(v)+'</p><p>Duración: '+time(v.duration)+'</p><p>Origen: almacenamiento local del dispositivo</p></div></section>';}
+function render(){const pages={explore,library,settings,home:online,profile:online,player};if(!pages[state.page])state.page="explore";content.innerHTML=pages[state.page]();content.classList.remove("page-enter");void content.offsetWidth;content.classList.add("page-enter");nav.hidden=state.page==="player";nav.innerHTML=navItems[state.mode].map(x=>'<button class="nav-item '+(state.page===x.id?"active":"")+'" data-page="'+x.id+'" type="button"><span class="nav-icon">'+x.icon+'</span><span>'+x.label+'</span></button>').join("");bind();if(state.page==="player")setupPlayer();}
+function go(page){if(state.page==="player"){const v=document.getElementById("mainVideo");if(v)v.pause();}state.page=page;render();}
+function bind(){content.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));nav.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));content.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{state.mode=b.dataset.mode;state.page=state.mode==="local"?"explore":"home";render();}));content.querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",()=>act(b.dataset.action)));content.querySelectorAll("[data-video]").forEach(b=>b.addEventListener("click",()=>openVideo(b.dataset.video)));content.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{go("library");const input=document.getElementById("librarySearch");if(input)input.placeholder="Filtrar películas de más de 90 minutos";}));const search=document.getElementById("librarySearch");if(search)search.addEventListener("input",()=>{const q=search.value.toLocaleLowerCase();const filtered=state.videos.slice().reverse().filter(v=>v.name.toLocaleLowerCase().includes(q));document.getElementById("libraryResults").innerHTML=filtered.length?list(filtered):empty("⌕","No encontramos ese archivo","Prueba con otro nombre.");document.querySelectorAll("#libraryResults [data-video]").forEach(b=>b.addEventListener("click",()=>openVideo(b.dataset.video)));});}
+function openVideo(id){const v=state.videos.find(x=>x.id===id);if(!v)return;state.currentVideo=v;state.lastPage=state.page;state.page="player";render();}
+function setupPlayer(){const video=document.getElementById("mainVideo"),v=state.currentVideo;if(!video||!v)return;if(activeUrl)URL.revokeObjectURL(activeUrl);activeUrl=URL.createObjectURL(v.file);video.src=activeUrl;const placeholder=document.getElementById("videoPlaceholder");video.addEventListener("loadedmetadata",()=>{placeholder.hidden=true;v.duration=video.duration;document.getElementById("totalTime").textContent=time(video.duration);});video.addEventListener("timeupdate",()=>{document.getElementById("currentTime").textContent=time(video.currentTime);document.getElementById("seekBar").value=video.duration?video.currentTime/video.duration*100:0;});video.addEventListener("play",()=>document.getElementById("playToggle").textContent="Ⅱ");video.addEventListener("pause",()=>document.getElementById("playToggle").innerHTML=svgPlay);document.getElementById("seekBar").addEventListener("input",e=>{if(video.duration)video.currentTime=Number(e.target.value)/100*video.duration;});document.getElementById("videoStage").addEventListener("click",e=>{if(!e.target.closest("button,input"))toggleOverlay();});video.addEventListener("ended",showOverlay);}
+function showOverlay(){const o=document.getElementById("videoOverlay");if(o)o.classList.remove("is-hidden");clearTimeout(overlayTimer);}
+function toggleOverlay(){const o=document.getElementById("videoOverlay");if(!o)return;o.classList.toggle("is-hidden");if(!o.classList.contains("is-hidden")){clearTimeout(overlayTimer);overlayTimer=setTimeout(()=>o.classList.add("is-hidden"),3500);}}
+async function expand(){const p=document.getElementById("playerPage");if(!p)return;try{if(!document.fullscreenElement)await p.requestFullscreen();if(screen.orientation&&screen.orientation.lock)await screen.orientation.lock("landscape");}catch(e){/* El navegador o el modo PWA puede no permitir bloquear la orientación. */}}
+function act(action){const video=document.getElementById("mainVideo");if(action==="add")picker.click();if(action==="back"){if(document.fullscreenElement)document.exitFullscreen();go(state.lastPage||"library");}if(action==="toggle"&&video){if(video.paused)video.play().catch(()=>{});else video.pause();}if(action==="expand")expand();if(action==="menu")alert("Más opciones estarán disponibles en una próxima actualización.");if(action==="subtitles")alert("La selección de subtítulos llegará en una próxima etapa.");if(action==="audio")alert("La selección de pistas estará disponible cuando el archivo incluya varias.");if(action==="speed"&&video){const rates=[1,1.25,1.5,1.75,2,.5,.75],next=rates[(rates.indexOf(video.playbackRate)+1)%rates.length];video.playbackRate=next;document.querySelectorAll("[data-action=speed]").forEach(b=>b.textContent=next+"× Velocidad");}}
+document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement&&screen.orientation&&screen.orientation.unlock)screen.orientation.unlock();});
+picker.addEventListener("change",e=>{const files=Array.from(e.target.files||[]).filter(f=>f.type.startsWith("video/"));files.forEach(file=>{const id=file.name+"-"+file.size+"-"+file.lastModified;if(state.videos.some(v=>v.id===id))return;const item={id,name:file.name.replace(/\.[^.]+$/,""),file,duration:0};state.videos.push(item);const probe=document.createElement("video");probe.preload="metadata";probe.onloadedmetadata=()=>{item.duration=Number.isFinite(probe.duration)?probe.duration:0;URL.revokeObjectURL(probe.src);if(state.page!=="player")render();};probe.onerror=()=>URL.revokeObjectURL(probe.src);probe.src=URL.createObjectURL(file);});if(files.length)render();picker.value="";});
+document.getElementById("headerAction").addEventListener("click",()=>{go(state.mode==="local"?"library":"home");document.querySelector('input[type="search"]')?.focus();});
 render();
-
-if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(() => {}));
-}
+if("serviceWorker"in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
