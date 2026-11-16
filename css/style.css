@@ -411,3 +411,13 @@ body{background:radial-gradient(ellipse at 12% -8%,rgba(155,123,255,.2),transpar
 .cinema-cover-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .cinema-art:has(.cinema-cover-image):before,.cinema-art:has(.cinema-cover-image):after{z-index:1;pointer-events:none}
 .cinema-art:has(.cinema-cover-image) small{position:relative;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+
+
+/* Biblioteca: edición de portada accesible sin abrir el reproductor */
+.media-row{gap:8px;min-width:0;border:1px solid var(--line);background:rgba(36,76,104,.16)}
+.media-row-open{display:flex;align-items:center;gap:12px;flex:1;min-width:0;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}
+.media-row-edit{display:flex;flex:0 0 auto;align-items:center;justify-content:center;gap:5px;min-height:38px;padding:0 10px;border:1px solid rgba(101,201,194,.25);border-radius:12px;background:rgba(101,201,194,.09);color:var(--mint);font:800 10px "Manrope",sans-serif;cursor:pointer}
+.media-row-edit svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round}
+.media-row-edit:active{transform:scale(.96)}
+.media-row-open:focus-visible,.media-row-edit:focus-visible{outline:2px solid var(--aurora);outline-offset:2px}
+@media(max-width:370px){.media-row{gap:6px;padding:6px}.media-thumb{width:88px;flex-basis:88px}.media-row-open{gap:8px}.media-row-edit{width:38px;padding:0;font-size:0}.media-row-edit svg{width:18px;height:18px}}
