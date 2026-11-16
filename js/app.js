@@ -115,7 +115,7 @@ if("serviceWorker"in navigator&&location.protocol.startsWith("http")){
 
 
 const astralCoverUrlCache=new Map();
-function astralCoverSrc(v){if(!v.cover)return '';if(!astralCoverUrlCache.has(v.id))astralCoverUrlCache.set(v.id,URL.createObjectURL(v.cover));return astralCoverUrlCache.get(v.id);}
+function astralCoverSrc(v){if(!v.cover)return '';if(!astralCoverUrlCache.has(v.id))astralCoverUrlCache.set(v.id,astralCoverSrc(v));return astralCoverUrlCache.get(v.id);}
 function editCurrentInfo(){
  const v=state.currentVideo;if(!v)return;
  document.getElementById("editInfoDialog")?.remove();
