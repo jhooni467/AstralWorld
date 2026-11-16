@@ -296,3 +296,10 @@ body{background:radial-gradient(ellipse at 12% -8%,rgba(155,123,255,.2),transpar
 .mini-close{font-size:24px;font-weight:500;line-height:1}
 @media(max-width:370px){.mini-player{left:8px;right:8px;gap:7px;padding:7px}.mini-video-slot{width:70px;flex-basis:70px}.mini-control{width:34px;height:34px;flex-basis:34px}}
 @media(prefers-reduced-motion:reduce){.mini-player{animation:none}}
+
+/* Blur cinematográfico direccional */
+@keyframes astralScreenOut{to{opacity:0;filter:blur(6px);transform:translate3d(var(--screen-exit-x,-16px),0,0) scale(.99)}}
+@keyframes astralScreenIn{from{opacity:0;filter:blur(9px) brightness(.86);transform:translate3d(var(--screen-enter-x,28px),0,0) scale(.985)}55%{opacity:1;filter:blur(2px) brightness(1.04)}to{opacity:1;filter:blur(0) brightness(1);transform:translate3d(0,0,0) scale(1)}}
+.player-page:fullscreen #fullscreenToggle,.player-page:-webkit-full-screen #fullscreenToggle{display:none!important}
+.player-page:fullscreen .fullscreen-exit,.player-page:-webkit-full-screen .fullscreen-exit{display:grid!important}
+.mini-expand svg{width:17px;height:17px}
