@@ -63,7 +63,7 @@ public class AstralMediaPlugin extends Plugin {
 const activityPath = new URL("java/" + pkg.replaceAll(".", "/") + "/MainActivity.java", base);
 let activity = await readFile(activityPath, "utf8");
 if (!activity.includes("registerPlugin(AstralMediaPlugin.class)")) {
- activity = activity.replace("public class MainActivity extends BridgeActivity {", "public class MainActivity extends BridgeActivity {\\n    @Override\\n    public void onCreate(android.os.Bundle savedInstanceState) {\\n        registerPlugin(AstralMediaPlugin.class);\\n        super.onCreate(savedInstanceState);\\n    }");
+ activity = activity.replace("public class MainActivity extends BridgeActivity {", "public class MainActivity extends BridgeActivity {\n    @Override\n    public void onCreate(android.os.Bundle savedInstanceState) {\n        registerPlugin(AstralMediaPlugin.class);\n        super.onCreate(savedInstanceState);\n    }");
  await writeFile(activityPath, activity);
 }
 let updated = manifest;
