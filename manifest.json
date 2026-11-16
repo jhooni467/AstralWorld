@@ -1,19 +1,15 @@
 {
   "name": "AstralWorld",
   "short_name": "AstralWorld",
-  "description": "Explora y organiza tus vídeos.",
+  "description": "Tu espacio cinematográfico para vídeos, Shorts y películas locales.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#101F35",
-  "theme_color": "#101F35",
+  "background_color": "#0b1025",
+  "theme_color": "#0b1025",
   "orientation": "any",
   "icons": [
-    {
-      "src": "./icons/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    }
+    { "src": "./icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "./icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
   ]
 }
