@@ -3,8 +3,17 @@
   "short_name": "AstralWorld",
   "description": "Explora y organiza tus vídeos.",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#101F35",
   "theme_color": "#101F35",
-  "orientation": "any"
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
