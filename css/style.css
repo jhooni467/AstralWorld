@@ -1010,3 +1010,6 @@ body{min-height:100dvh!important}
 .queue-row button:last-child{font-size:22px;color:var(--muted)}
 .player-info .info-line{display:flex;justify-content:space-between;gap:18px;padding:8px 0;border-bottom:1px solid var(--line)}
 .player-info .info-line strong{text-align:right;overflow-wrap:anywhere}
+
+.gesture-indicator{position:absolute;z-index:12;left:50%;top:50%;transform:translate(-50%,-50%) scale(.94);padding:11px 17px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(4,12,22,.78);color:#fff;font-size:12px;font-weight:800;opacity:0;pointer-events:none;backdrop-filter:blur(12px);transition:opacity .18s,transform .18s}
+.gesture-indicator.visible{opacity:1;transform:translate(-50%,-50%) scale(1)}
