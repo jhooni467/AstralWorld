@@ -663,3 +663,5 @@ p{color:#a7b7aa}
 .edit-info-form input[type=file]{font-size:11px;color:#a9b9aa}
 .edit-info-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
 @media(max-width:420px){.online-editorial{gap:8px}.profile-stat-row{gap:7px}.profile-stat-row>div{padding:13px 7px}}
+
+.topbar[hidden]{display:none!important}
