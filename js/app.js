@@ -1,5 +1,5 @@
 const APP_VERSION = "1.00";
-const UPDATE_FEED_URL = "https://raw.githubusercontent.com/jhooni467/AstralWorld/main/app-update.json";
+const UPDATE_FEED_URL = "https://raw.githubusercontent.com/jhooni467/Noverse/main/updates.json";
 const state={mode:"local",page:"explore",videos:[],currentVideo:null,lastPage:"library",activity:[]};
 const DB_NAME="astralworld-library",DB_VERSION=2;
 let dbPromise=null,lastProgressWrite=0,libraryReady=Promise.resolve(),subtitleFontName="Fuente predeterminada";
@@ -291,17 +291,34 @@ function showUpdateDialog(update){
  dialog.addEventListener("click",event=>{if(event.target===dialog){try{localStorage.setItem("astralworld-update-dismissed",String(update.latestVersion));}catch(error){}closeUpdateDialog();}});
  dialog.showModal();
 }
+async function notifyAstralUpdate(update){
+ const key="astralworld-update-notified",version=String(update.latestVersion||"");
+ let notified="",denied=false;
+ try{notified=localStorage.getItem(key)||"";denied=localStorage.getItem("astralworld-notifications-denied")==="yes";}catch(error){}
+ if(notified===version||denied)return;
+ const notifications=window.Capacitor?.Plugins?.LocalNotifications;
+ if(!notifications)return;
+ try{
+  let permission=await notifications.checkPermissions();
+  if(permission.display!=="granted")permission=await notifications.requestPermissions();
+  if(permission.display!=="granted"){try{localStorage.setItem("astralworld-notifications-denied","yes");}catch(error){}return;}
+  await notifications.schedule({notifications:[{id:1001,title:"AstralWorld tiene una actualización",body:"Ya está disponible la versión "+version+". "+(update.summary||"Descubre las novedades."),schedule:{at:new Date(Date.now()+1200)},extra:{version,source:"noverse-update-feed"}}]});
+  try{localStorage.setItem(key,version);}catch(error){}
+ }catch(error){console.info("No se pudo mostrar la notificación de actualización:",error);}
+}
 async function checkForAppUpdates(){
  if(!window.Capacitor?.isNativePlatform?.())return;
  try{
   const response=await fetch(UPDATE_FEED_URL,{cache:"no-store",headers:{"Accept":"application/json"}});
   if(!response.ok)throw new Error("Feed de actualizaciones no disponible ("+response.status+").");
-  const update=await response.json();
+  const feed=await response.json();
+  const update=(feed.apps||[]).find(item=>item.id==="astralworld"||item.packageName==="com.noverse.astralworld");
   if(!update||!update.latestVersion||compareAppVersions(update.latestVersion,APP_VERSION)<=0)return;
   let dismissed="";try{dismissed=localStorage.getItem("astralworld-update-dismissed")||"";}catch(error){}
   if(dismissed===String(update.latestVersion))return;
   if(update.minimumVersion&&compareAppVersions(APP_VERSION,update.minimumVersion)<0)update.summary=(update.summary||"Hay una actualización importante.")+" Esta versión es necesaria para continuar usando AstralWorld.";
-  showUpdateDialog(update);
+  await notifyAstralUpdate(update);
+  showUpdateDialog({...update,noverseUrl:"https://jhooni467.github.io/Noverse/",githubUrl:"https://github.com/jhooni467/AstralWorld/releases"});
  }catch(error){console.info("No se pudo comprobar si hay actualizaciones:",error);}
 }
 window.addEventListener("load",()=>{window.setTimeout(checkForAppUpdates,1800);},{once:true});
