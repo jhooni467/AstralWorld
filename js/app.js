@@ -111,7 +111,7 @@ function openSubtitlePicker(){
     reader.onload=()=>{
       try{
         let content=String(reader.result||"").replace(/^\uFEFF/,"");
-        if(ext==="srt"){content="WEBVTT\\n\\n"+content.replace(/(\\d{2}:\\d{2}:\\d{2}),(\\d{3})/g,"$1.$2").replace(/^(\\d+)\\s*$/gm,"");}
+        if(ext==="srt"){content="WEBVTT\n\n"+content.replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g,"$1.$2").replace(/^(\d+)\s*$/gm,"");}
         if(!content.trim().startsWith("WEBVTT"))throw new Error("invalid");
         if(activeSubtitleUrl)URL.revokeObjectURL(activeSubtitleUrl);
         activeSubtitleUrl=URL.createObjectURL(new Blob([content],{type:"text/vtt"}));
