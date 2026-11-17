@@ -14,8 +14,7 @@
     "@capacitor/core": "^7.4.3",
     "@capacitor/app": "^7.1.0",
     "@capacitor/status-bar": "^7.0.1",
-    "@capacitor/screen-orientation": "^7.0.1",
-    "@capacitor/keep-awake": "^7.0.1"
+    "@capacitor/screen-orientation": "^7.0.1"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.4.3"
