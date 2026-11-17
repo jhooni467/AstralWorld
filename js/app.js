@@ -1,3 +1,5 @@
+const APP_VERSION = "1.00";
+const UPDATE_FEED_URL = "https://raw.githubusercontent.com/jhooni467/AstralWorld/main/app-update.json";
 const state={mode:"local",page:"explore",videos:[],currentVideo:null,lastPage:"library",activity:[]};
 const DB_NAME="astralworld-library",DB_VERSION=2;
 let dbPromise=null,lastProgressWrite=0,libraryReady=Promise.resolve(),subtitleFontName="Fuente predeterminada";
@@ -264,3 +266,42 @@ document.addEventListener("astral:android-back",()=>{
  if(state.page==="settings"||state.page==="library"||state.page==="activity"||state.page==="profile"){state.page=state.mode==="local"?"explore":"home";render();return;}
  if(state.page==="explore"||state.page==="home"){document.dispatchEvent(new CustomEvent("astral:android-exit-request"));}
 });
+
+
+// Actualizaciones: el feed remoto solo muestra versiones superiores a la instalada.
+function compareAppVersions(a,b){
+ const left=String(a||"0").split(/[.+-]/).map(Number),right=String(b||"0").split(/[.+-]/).map(Number);
+ for(let i=0;i<Math.max(left.length,right.length);i++){const x=Number.isFinite(left[i])?left[i]:0,y=Number.isFinite(right[i])?right[i]:0;if(x!==y)return x-y;}
+ return 0;
+}
+function closeUpdateDialog(){
+ const dialog=document.getElementById("astralUpdateDialog");
+ if(dialog?.open)dialog.close();
+ dialog?.remove();
+}
+function showUpdateDialog(update){
+ if(document.getElementById("astralUpdateDialog"))return;
+ const notes=Array.isArray(update.highlights)?update.highlights:[];
+ const dialog=document.createElement("dialog");
+ dialog.id="astralUpdateDialog";
+ dialog.className="app-update-dialog";
+ dialog.innerHTML='<div class="update-orbit" aria-hidden="true"><span>✦</span></div><p class="eyebrow">NUEVA VERSIÓN DISPONIBLE</p><h2>Actualización '+esc(update.latestVersion)+'</h2><p class="update-summary">'+esc(update.summary||"AstralWorld tiene novedades para ti.")+'</p><div class="update-highlights">'+notes.map(note=>'<div><span>✦</span><p>'+esc(note)+'</p></div>').join("")+'</div><p class="update-source-label">¿Dónde deseas actualizar?</p><div class="update-source-actions"><a class="update-source-button update-noverse" href="'+esc(update.noverseUrl||"https://jhooni467.github.io/Noverse/")+'" target="_blank" rel="noopener noreferrer"><span>✦</span><span><strong>En Noverse</strong><small>Marketplace de Noverse</small></span><b>↗</b></a><a class="update-source-button" href="'+esc(update.githubUrl||"https://github.com/jhooni467/AstralWorld/releases")+'" target="_blank" rel="noopener noreferrer"><span>⌘</span><span><strong>En GitHub</strong><small>Versiones y archivos oficiales</small></span><b>↗</b></a></div><button class="update-later" type="button" data-update-later>Actualizar más tarde</button><small class="update-version-note">Versión instalada: '+APP_VERSION+'</small>';
+ document.body.appendChild(dialog);
+ dialog.querySelector("[data-update-later]").addEventListener("click",()=>{try{localStorage.setItem("astralworld-update-dismissed",String(update.latestVersion));}catch(error){}closeUpdateDialog();});
+ dialog.addEventListener("click",event=>{if(event.target===dialog){try{localStorage.setItem("astralworld-update-dismissed",String(update.latestVersion));}catch(error){}closeUpdateDialog();}});
+ dialog.showModal();
+}
+async function checkForAppUpdates(){
+ if(!window.Capacitor?.isNativePlatform?.())return;
+ try{
+  const response=await fetch(UPDATE_FEED_URL,{cache:"no-store",headers:{"Accept":"application/json"}});
+  if(!response.ok)throw new Error("Feed de actualizaciones no disponible ("+response.status+").");
+  const update=await response.json();
+  if(!update||!update.latestVersion||compareAppVersions(update.latestVersion,APP_VERSION)<=0)return;
+  let dismissed="";try{dismissed=localStorage.getItem("astralworld-update-dismissed")||"";}catch(error){}
+  if(dismissed===String(update.latestVersion))return;
+  if(update.minimumVersion&&compareAppVersions(APP_VERSION,update.minimumVersion)<0)update.summary=(update.summary||"Hay una actualización importante.")+" Esta versión es necesaria para continuar usando AstralWorld.";
+  showUpdateDialog(update);
+ }catch(error){console.info("No se pudo comprobar si hay actualizaciones:",error);}
+}
+window.addEventListener("load",()=>{window.setTimeout(checkForAppUpdates,1800);},{once:true});
