@@ -790,3 +790,39 @@ p{color:#a7b7aa}
 .video-overlay .skip-control{width:48px;height:48px}
 @media(max-width:420px){.theme-grid{gap:8px}.theme-choice{min-height:96px;padding:8px}.theme-preview{height:38px}}
 @media(prefers-reduced-motion:reduce){.video-atmosphere-canvas,.ambient-light-canvas{transition:none!important}}
+
+/* Fix: controles estables y temas aplicados a toda la interfaz */
+:root[data-theme="astral"]{--night:#0b1511;--steel:#14251d;--surface:#182c22;--surface-raised:#20382b;--surface-soft:#122119;--aurora:#79a98a;--mint:#a9c8ae;--solar:#c7d6c4;--text:#f0f4ef;--muted:#a2b3a4;--line:rgba(170,202,174,.13);--theme-glow:rgba(66,105,74,.2);--theme-nav:rgba(9,19,13,.97);--theme-top:rgba(11,21,17,.94);--theme-card:rgba(20,37,27,.78);--theme-card-end:rgba(16,30,21,.94);--theme-button:#54845e}
+:root[data-theme="cosmic"]{--night:#100d20;--steel:#292044;--surface:#211a38;--surface-raised:#342753;--surface-soft:#19142b;--aurora:#b18cff;--mint:#d6c5ff;--solar:#f6b8df;--text:#faf5ff;--muted:#bdb0d0;--line:rgba(214,197,255,.16);--theme-glow:rgba(142,104,220,.2);--theme-nav:rgba(16,11,31,.97);--theme-top:rgba(20,14,37,.94);--theme-card:rgba(37,27,61,.85);--theme-card-end:rgba(22,16,39,.96);--theme-button:#7656b4}
+:root[data-theme="ocean"]{--night:#071923;--steel:#103b4d;--surface:#123242;--surface-raised:#1b4b5c;--surface-soft:#0b2834;--aurora:#42c7d5;--mint:#a9edf0;--solar:#a7d7ff;--text:#effcff;--muted:#9ebdc5;--line:rgba(169,237,240,.16);--theme-glow:rgba(39,157,177,.2);--theme-nav:rgba(5,22,31,.97);--theme-top:rgba(7,29,42,.94);--theme-card:rgba(13,49,63,.85);--theme-card-end:rgba(7,29,42,.96);--theme-button:#247d8b}
+:root[data-theme="sunset"]{--night:#24141c;--steel:#583044;--surface:#422536;--surface-raised:#69384a;--surface-soft:#321c28;--aurora:#ff9476;--mint:#ffc3a6;--solar:#ffd17e;--text:#fff6f0;--muted:#d2aaa0;--line:rgba(255,195,166,.16);--theme-glow:rgba(201,93,89,.2);--theme-nav:rgba(35,17,25,.97);--theme-top:rgba(43,23,32,.94);--theme-card:rgba(66,35,49,.86);--theme-card-end:rgba(37,20,29,.96);--theme-button:#a64f54}
+:root[data-theme="rose"]{--night:#211522;--steel:#4e2d49;--surface:#3b2438;--surface-raised:#593653;--surface-soft:#2c1b2b;--aurora:#e58ac4;--mint:#f4c3e4;--solar:#ffd2ad;--text:#fff5fc;--muted:#d0afc5;--line:rgba(244,195,228,.16);--theme-glow:rgba(193,99,161,.2);--theme-nav:rgba(31,17,32,.97);--theme-top:rgba(38,23,37,.94);--theme-card:rgba(59,36,56,.86);--theme-card-end:rgba(32,19,34,.96);--theme-button:#98527f}
+:root[data-theme] html,:root[data-theme] body{background-color:var(--night)!important;color:var(--text)}
+:root[data-theme] body{background:radial-gradient(ellipse at 50% -25%,var(--theme-glow),transparent 38rem),linear-gradient(180deg,var(--night),var(--theme-card-end))!important;color:var(--text)}
+:root[data-theme] .topbar{background:var(--theme-top)!important;border-color:var(--line)!important}
+:root[data-theme] .brand-mark,:root[data-theme] .icon-button,:root[data-theme] .round-button{color:var(--solar)}
+:root[data-theme] .eyebrow,:root[data-theme] .text-button,:root[data-theme] .player-eyebrow,:root[data-theme] .nav-item.active,:root[data-theme] .nav-icon{color:var(--aurora)!important}
+:root[data-theme] .settings-group{background:linear-gradient(145deg,var(--theme-card),var(--theme-card-end))!important;border-color:var(--line)!important}
+:root[data-theme] .settings-group h2,:root[data-theme] .settings-group .setting-row strong,:root[data-theme] h1,:root[data-theme] .brand{color:var(--text)}
+:root[data-theme] .settings-group h2:before{background:var(--aurora)!important}
+:root[data-theme] .settings-group .setting-row{border-color:var(--line)!important}
+:root[data-theme] .settings-group p,:root[data-theme] .page-intro,:root[data-theme] .media-copy small{color:var(--muted)!important}
+:root[data-theme] .bottom-nav,:root[data-theme] #bottomNav{background:var(--theme-nav)!important;border-color:var(--line)!important}
+:root[data-theme] .nav-item.active{background:color-mix(in srgb,var(--aurora) 13%,transparent)!important}
+:root[data-theme] .mode-switch,:root[data-theme] .search-field,:root[data-theme] .icon-button{background:var(--surface-soft)!important;border-color:var(--line)!important;color:var(--text)}
+:root[data-theme] .mode-button.active,:root[data-theme] .setting-toggle.active{background:var(--theme-button)!important;color:#fff}
+:root[data-theme] .setting-toggle{flex:0 0 48px!important;width:48px!important;min-width:48px!important;height:28px!important;min-height:28px!important;padding:3px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;box-sizing:border-box!important;border:0!important;border-radius:999px!important;overflow:hidden!important;appearance:none!important;-webkit-appearance:none!important;transform:none!important}
+:root[data-theme] .setting-toggle span{display:block!important;position:static!important;flex:0 0 22px!important;width:22px!important;height:22px!important;min-width:22px!important;min-height:22px!important;margin:0!important;border-radius:50%!important;background:#f5f7f4!important;transform:translateX(0)!important;transition:transform .22s ease!important}
+:root[data-theme] .setting-toggle.active span{transform:translateX(20px)!important}
+:root[data-theme] .theme-choice{background:var(--theme-card)!important;color:var(--text)!important;border-color:var(--line)!important}
+:root[data-theme] .theme-choice.active{border-color:var(--aurora)!important;background:color-mix(in srgb,var(--aurora) 12%,var(--theme-card))!important}
+:root[data-theme] .theme-check{color:var(--aurora)!important}
+:root[data-theme] .player-action,:root[data-theme] .player-info,:root[data-theme] .shortcut,:root[data-theme] .collection-feature{background:var(--theme-card)!important;border-color:var(--line)!important;color:var(--text)!important}
+:root[data-theme] .player-action .action-icon{background:color-mix(in srgb,var(--aurora) 14%,transparent)!important;color:var(--aurora)!important}
+:root[data-theme] .primary-button{background:linear-gradient(110deg,var(--steel),var(--aurora))!important;color:var(--night)!important}
+:root[data-theme] .player-control-line input[type=range]{accent-color:var(--aurora)!important}
+:root[data-theme] .player-control-line input[type=range]::-webkit-slider-thumb{border-color:var(--aurora)!important}
+:root[data-theme] .player-control-line input[type=range]::-moz-range-thumb{border-color:var(--aurora)!important}
+:root[data-theme] .video-atmosphere-canvas{pointer-events:none!important;flex:none!important;min-width:0!important;min-height:0!important}
+:root[data-theme] .setting-row>div{min-width:0;flex:1 1 auto}
+@media(prefers-reduced-motion:reduce){:root[data-theme] .setting-toggle span{transition:none!important}}
