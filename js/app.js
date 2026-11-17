@@ -254,3 +254,13 @@ if("serviceWorker"in navigator&&location.protocol.startsWith("http")){
     }catch(error){console.warn("No se pudo activar el modo PWA:",error);}
   });
 }
+// Android hardware/system back integration (Capacitor).
+document.addEventListener("astral:android-back",()=>{
+ const openDialog=document.querySelector("dialog[open]");
+ if(openDialog){openDialog.close();openDialog.remove();return;}
+ const menu=document.getElementById("playerActionMenu");if(menu){menu.remove();return;}
+ if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});return;}
+ if(state.page==="player"){state.page=state.lastPage||"library";render();return;}
+ if(state.page==="settings"||state.page==="library"||state.page==="activity"||state.page==="profile"){state.page=state.mode==="local"?"explore":"home";render();return;}
+ if(state.page==="explore"||state.page==="home"){document.dispatchEvent(new CustomEvent("astral:android-exit-request"));}
+});
