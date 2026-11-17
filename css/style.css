@@ -902,3 +902,40 @@ p{color:#a7b7aa}
 @keyframes astralScreenOut{to{opacity:0;filter:blur(7px);transform:translate3d(var(--screen-exit-x,-16px),0,0) scale(.985)}}
 button,.icon-button,.round-button,.theme-choice,.setting-toggle,.nav-item,.media-row,.continue-card{transition-duration:.32s!important;transition-timing-function:var(--motion-fluid)!important}
 @media(prefers-reduced-motion:reduce){.mini-player::before,.mini-player::after{transition:none!important}}
+
+
+/* Ajuste de pantalla y textos: evitar desbordes en móviles */
+html,body{width:100%;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+*,*::before,*::after{box-sizing:border-box}
+.app-shell{width:100%;max-width:520px;min-width:0;overflow-x:clip}
+.content{width:100%;min-width:0;max-width:100%;overflow-x:clip}
+.player-page,.player-heading,.player-title-copy,.player-primary-actions,.player-info,.player-info .info-line{min-width:0;max-width:100%}
+.player-heading{display:flex;align-items:flex-start;gap:10px}
+.player-title-copy{flex:1 1 auto;overflow:hidden}
+.player-title-copy h1{max-width:100%;overflow-wrap:anywhere;word-break:break-word;line-height:1.16}
+.player-meta{max-width:100%;overflow-wrap:anywhere;word-break:break-word}
+.player-edit-button{flex:0 0 auto}
+.player-primary-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.player-primary-actions .player-action{width:100%;min-width:0;max-width:100%;display:flex;align-items:center;gap:9px;overflow:hidden;text-align:left}
+.player-primary-actions .player-action>span:not(.action-icon),.player-primary-actions .player-action i{min-width:0;overflow-wrap:anywhere;word-break:break-word}
+.player-primary-actions .action-icon{flex:0 0 32px}
+.player-info .info-line{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.player-info .info-line strong{min-width:0;max-width:65%;overflow-wrap:anywhere;word-break:break-word;text-align:right}
+.player-info .info-line span{flex:0 0 auto}
+.video-stage{width:100%;max-width:100%;min-width:0}
+.video-overlay{max-width:100%;overflow:hidden}
+.video-overlay-center{max-width:100%;gap:clamp(8px,3vw,22px)}
+.video-overlay-bottom{max-width:100%;min-width:0}
+.video-tools{max-width:calc(100% - 20px)}
+@media(max-width:360px){
+ .player-primary-actions{grid-template-columns:minmax(0,1fr)}
+ .player-heading{gap:7px}
+ .video-overlay{padding-inline:8px}
+ .video-overlay-center{gap:5px}
+ .video-overlay .hero-play-button{width:56px;height:56px}
+ .video-overlay .skip-control{width:40px;height:40px}
+ .video-overlay-bottom{padding-inline:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .video-overlay,.video-overlay *{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
