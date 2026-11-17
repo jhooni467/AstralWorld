@@ -437,3 +437,13 @@ body{background:radial-gradient(ellipse at 85% -8%,rgba(85,214,207,.09),transpar
 @media(prefers-reduced-motion:reduce){
  .video-overlay,.video-overlay-center .hero-play-button,.video-stage .stage-backdrop,.cinema-cover,.seek-feedback{transition:none!important}
 }
+
+/* Reproductor extendido: cine a pantalla completa */
+.player-page:fullscreen,.player-page:-webkit-full-screen{background:#050914}
+.player-page:fullscreen .video-stage,.player-page:-webkit-full-screen .video-stage{border:0;border-radius:0;box-shadow:none;background:#050914}
+.player-page:fullscreen .video-stage video,.player-page:-webkit-full-screen .video-stage video{width:100%;height:100%;max-height:none;object-fit:contain}
+.player-page:fullscreen .video-overlay,.player-page:-webkit-full-screen .video-overlay{padding:clamp(16px,4vw,42px)}
+.player-page:fullscreen .video-overlay-center .hero-play-button,.player-page:-webkit-full-screen .video-overlay-center .hero-play-button{width:76px;height:76px}
+.player-page:fullscreen .video-overlay-center .skip-control,.player-page:-webkit-full-screen .video-overlay-center .skip-control{width:54px;height:54px}
+.cinema-art:has(.cinema-cover) .art-symbol{display:none}
+.media-thumb:has(.media-cover) svg{display:none}
