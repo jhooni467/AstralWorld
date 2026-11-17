@@ -939,3 +939,25 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none
 @media(prefers-reduced-motion:reduce){
  .video-overlay,.video-overlay *{transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
+
+
+/* Corrección de scroll vertical y fondo limpio sin efectos */
+html,body{height:auto!important;min-height:100%;overflow-y:auto!important;overscroll-behavior-y:auto!important;touch-action:pan-y}
+body{min-height:100dvh!important}
+.app-shell{min-height:100dvh!important;height:auto!important;overflow-x:clip!important;overflow-y:visible!important}
+#appContent,.content{min-height:0!important;height:auto!important;overflow-x:clip!important;overflow-y:visible!important;touch-action:pan-y}
+.player-page{overflow:visible!important}
+.video-stage{overflow:hidden!important;background:transparent!important;box-shadow:none!important}
+.video-stage:after{background:none!important}
+.video-stage:not(:has(.ambient-light-canvas.is-active)):not(.video-atmosphere-on){box-shadow:none!important}
+.video-atmosphere-canvas{display:block!important;visibility:visible!important;opacity:0!important;mix-blend-mode:screen;pointer-events:none!important}
+.video-atmosphere-canvas.is-active{opacity:.68!important}
+.ambient-light-canvas{opacity:0!important}
+.ambient-light-canvas.is-active{opacity:.56!important}
+.video-stage.video-atmosphere-on{box-shadow:0 0 0 1px color-mix(in srgb,var(--atmosphere-glow,var(--aurora)) 30%,transparent),0 0 28px 5px color-mix(in srgb,var(--atmosphere-glow,var(--aurora)) 34%,transparent)!important}
+.video-stage:has(.ambient-light-canvas.is-active){box-shadow:0 0 25px color-mix(in srgb,var(--ambient-glow,var(--aurora)) 22%,transparent)!important}
+.performance-warning{width:min( min(92vw,420px), calc(100vw - 28px));max-width:420px;padding:24px;border:1px solid var(--line);border-radius:22px;background:var(--surface-raised,var(--night));color:var(--text);box-shadow:0 24px 80px rgba(0,0,0,.55)}
+.performance-warning::backdrop{background:rgba(0,0,0,.68);backdrop-filter:blur(7px)}
+.performance-warning .player-choice-head p{font-size:13px;line-height:1.6;color:var(--muted);white-space:normal;overflow-wrap:anywhere}
+.performance-warning-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:22px}
+.performance-warning-actions button{min-height:42px;padding:0 15px}
