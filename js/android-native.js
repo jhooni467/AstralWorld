@@ -2,7 +2,7 @@
  const cap=window.Capacitor;
  if(!cap||!cap.isNativePlatform||!cap.isNativePlatform())return;
  const plugins=cap.Plugins||{};
- const App=plugins.App,StatusBar=plugins.StatusBar,ScreenOrientation=plugins.ScreenOrientation,KeepAwake=plugins.KeepAwake;
+ const App=plugins.App,StatusBar=plugins.StatusBar,ScreenOrientation=plugins.ScreenOrientation;
  document.documentElement.classList.add("is-native-android");
  const setStatusBar=async hidden=>{try{if(!StatusBar)return;if(hidden)await StatusBar.hide();else await StatusBar.show();}catch(error){console.warn("No se pudo actualizar la barra de estado",error);}};
  const setOrientation=async orientation=>{try{if(ScreenOrientation)await ScreenOrientation.lock({orientation});}catch(error){console.warn("La orientación solicitada no está disponible",error);}};
@@ -12,5 +12,5 @@
  if(App?.addListener){App.addListener("backButton",()=>document.dispatchEvent(new CustomEvent("astral:android-back")));App.addListener("appStateChange",({isActive})=>{if(!isActive)document.dispatchEvent(new Event("pagehide"));});}
  document.addEventListener("astral:android-exit-request",()=>{if(App?.exitApp)App.exitApp();});
  document.addEventListener("DOMContentLoaded",updateNativeUi,{once:true});
- window.astralNative={setStatusBar,setOrientation,keepAwake:async enabled=>{try{if(!KeepAwake)return;if(enabled)await KeepAwake.keepAwake();else await KeepAwake.allowSleep();}catch(error){console.warn("No se pudo cambiar la pantalla activa",error);}}};
+ window.astralNative={setStatusBar,setOrientation,};
 })();
