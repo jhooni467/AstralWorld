@@ -1,0 +1,67 @@
+name: Build AstralWorld Android APK
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - '**'
+      - '!README.md'
+
+permissions:
+  contents: write
+
+jobs:
+  build-debug-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install JavaScript dependencies
+        run: npm install
+      - name: Prepare web assets
+        run: npm run prepare:web
+      - name: Generate native Android project
+        run: npx cap add android
+      - name: Sync Capacitor Android project
+        run: npx cap sync android
+      - name: Set Android version
+        run: sed -i -E 's/versionCode [0-9]+/versionCode 100/; s/versionName .*/versionName "1.00"/' android/app/build.gradle
+      - name: Build debug APK
+        run: cd android && ./gradlew assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AstralWorld-Android-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+
+      - name: Publish Noverse-ready GitHub release
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.00
+          name: AstralWorld v1.00 — Android
+          body: |
+            AstralWorld v1.00 para Android.
+
+            - APK instalable para pruebas.
+            - Integración Android con Capacitor.
+            - Importación de varios vídeos mediante el selector multimedia del sistema.
+            - Pantalla de novedades con opciones de actualización desde Noverse o GitHub.
+
+            Nota: esta compilación está firmada con la clave debug de CI y es una versión de prueba. Para futuras actualizaciones sin desinstalar, se deberá configurar una clave de firma de publicación estable.
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+          overwrite_files: true
+          make_latest: true

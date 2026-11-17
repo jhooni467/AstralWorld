@@ -1,0 +1,23 @@
+{
+  "name": "astralworld",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AstralWorld Android application",
+  "scripts": {
+    "prepare:web": "node scripts/prepare-web.mjs",
+    "android:sync": "npm run prepare:web && cap sync android",
+    "android:open": "cap open android",
+    "android:build:debug": "npm run android:sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/app": "^7.1.0",
+    "@capacitor/status-bar": "^7.0.1",
+    "@capacitor/screen-orientation": "^7.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "typescript": "^5.9.3"
+  }
+}

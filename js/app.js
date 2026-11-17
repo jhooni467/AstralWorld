@@ -1,3 +1,5 @@
+const APP_VERSION = "1.00";
+const UPDATE_FEED_URL = "https://raw.githubusercontent.com/jhooni467/AstralWorld/main/app-update.json";
 const state={mode:"local",page:"explore",videos:[],currentVideo:null,lastPage:"library",activity:[]};
 const DB_NAME="astralworld-library",DB_VERSION=2;
 let dbPromise=null,lastProgressWrite=0,libraryReady=Promise.resolve(),subtitleFontName="Fuente predeterminada";
@@ -185,7 +187,7 @@ function openSubtitlePicker(){
 function confirmPerformanceEffect(action){const title=action==="ambient"?"Ambient Light":"Video Atmosphere";const dialog=document.createElement("dialog");dialog.className="player-choice-dialog performance-warning";dialog.innerHTML='<div class="player-choice-head"><span class="eyebrow">AVISO DE RENDIMIENTO</span><h2>Activar '+title+'?</h2><p>Este efecto analiza los colores del vídeo y puede aumentar el consumo de recursos, calentar el dispositivo o reducir la fluidez en equipos menos potentes.</p></div><div class="performance-warning-actions"><button type="button" class="secondary-button" data-cancel>Ahora no</button><button type="button" class="primary-button" data-confirm>Activar efecto</button></div>';document.body.appendChild(dialog);const cleanup=()=>dialog.remove();dialog.querySelector("[data-cancel]").addEventListener("click",()=>dialog.close());dialog.querySelector("[data-confirm]").addEventListener("click",()=>{dialog.close();if(action==="ambient")setAmbientEnabled(true);else setAtmosphereEnabled(true);});dialog.addEventListener("close",cleanup,{once:true});dialog.addEventListener("click",event=>{if(event.target===dialog)dialog.close();});dialog.showModal();}
 function setAmbientEnabled(value){ambientEnabled=value;try{localStorage.setItem("astralworld-ambient-light",ambientEnabled?"1":"0");}catch(error){}applyAmbientLight();const label=document.querySelector(".ambient-state");if(label)label.textContent=ambientEnabled?"Activado":"Desactivado";document.querySelectorAll('[data-action="ambient"]').forEach(toggle=>{toggle.classList.toggle("active",ambientEnabled);toggle.setAttribute("aria-checked",String(ambientEnabled));toggle.setAttribute("aria-pressed",String(ambientEnabled));toggle.setAttribute("aria-label",ambientEnabled?"Desactivar Ambient light":"Activar Ambient light");});}
 function setAtmosphereEnabled(value){atmosphereEnabled=value;try{localStorage.setItem("astralworld-video-atmosphere",atmosphereEnabled?"1":"0");}catch(error){}applyAmbientLight();document.querySelectorAll('[data-action="atmosphere"]').forEach(toggle=>{toggle.classList.toggle("active",atmosphereEnabled);toggle.setAttribute("aria-checked",String(atmosphereEnabled));});}
-function act(action){const video=document.getElementById("mainVideo");if(action==="ambient"){if(!ambientEnabled){confirmPerformanceEffect("ambient");return;}setAmbientEnabled(false);return;}if(action==="atmosphere"){if(!atmosphereEnabled){confirmPerformanceEffect("atmosphere");return;}setAtmosphereEnabled(false);return;}if(action==="install"){installAstralWorld();return;}if(action==="font"){openFontPicker();return;}if(action==="resetFont"){resetSubtitleFont();return;}if(action==="collections"){openCollectionsPage();return;}if(action==="add")picker.click();if(action==="folder")readDeviceFolder();if(action==="back"){if(document.fullscreenElement)document.exitFullscreen();go(state.lastPage||"library");}if(action==="toggle"&&video){if(video.paused)video.play().catch(()=>{});else video.pause();}if(action==="expand")expand();if(action==="seekBack"&&video)seekBy(-10);if(action==="seekForward"&&video)seekBy(10);if(action==="exitFullscreen"&&document.fullscreenElement)document.exitFullscreen().catch(console.warn);if(action==="closeMini"){const mini=document.getElementById("miniPlayer");if(mini)mini.classList.add("is-closing");if(miniEffectsFrame){cancelAnimationFrame(miniEffectsFrame);miniEffectsFrame=0;}if(state.currentVideo&&persistentVideo){state.currentVideo.progress=persistentVideo.currentTime||state.currentVideo.progress;saveVideo(state.currentVideo).catch(console.warn);}if(persistentVideo){persistentVideo.pause();persistentVideo.currentTime=0;persistentVideo.removeAttribute("src");persistentVideo.load();persistentVideo.remove();}if(activeUrl)URL.revokeObjectURL(activeUrl);activeUrl=null;persistentVideo=null;state.currentVideo=null;setTimeout(()=>mini?.remove(),230);}if(action==="menu")showPlayerMenu();if(action==="editInfo")editCurrentInfo();if(action==="subtitles"){openSubtitlePicker();return;}if(action==="lock"){toggleScreenLock();return;}if(action==="screenshot"){captureFrame();return;}if(action==="subtitleStyle"){openSubtitleStyle();return;}if(action==="playbackMode"){cyclePlaybackMode();return;}if(action==="audioMode"){openAudioModeDialog();return;}if(action==="audio")alert("La selección de pistas estará disponible cuando el archivo incluya varias.");if(action==="speed"&&video){openSpeedPicker(video);return;}}
+function act(action){const video=document.getElementById("mainVideo");if(action==="ambient"){if(!ambientEnabled){confirmPerformanceEffect("ambient");return;}setAmbientEnabled(false);return;}if(action==="atmosphere"){if(!atmosphereEnabled){confirmPerformanceEffect("atmosphere");return;}setAtmosphereEnabled(false);return;}if(action==="install"){installAstralWorld();return;}if(action==="font"){openFontPicker();return;}if(action==="resetFont"){resetSubtitleFont();return;}if(action==="collections"){openCollectionsPage();return;}if(action==="add"){if(window.astralNative?.pickVideos)window.astralNative.pickVideos();else picker.click();}if(action==="folder")readDeviceFolder();if(action==="back"){if(document.fullscreenElement)document.exitFullscreen();go(state.lastPage||"library");}if(action==="toggle"&&video){if(video.paused)video.play().catch(()=>{});else video.pause();}if(action==="expand")expand();if(action==="seekBack"&&video)seekBy(-10);if(action==="seekForward"&&video)seekBy(10);if(action==="exitFullscreen"&&document.fullscreenElement)document.exitFullscreen().catch(console.warn);if(action==="closeMini"){const mini=document.getElementById("miniPlayer");if(mini)mini.classList.add("is-closing");if(miniEffectsFrame){cancelAnimationFrame(miniEffectsFrame);miniEffectsFrame=0;}if(state.currentVideo&&persistentVideo){state.currentVideo.progress=persistentVideo.currentTime||state.currentVideo.progress;saveVideo(state.currentVideo).catch(console.warn);}if(persistentVideo){persistentVideo.pause();persistentVideo.currentTime=0;persistentVideo.removeAttribute("src");persistentVideo.load();persistentVideo.remove();}if(activeUrl)URL.revokeObjectURL(activeUrl);activeUrl=null;persistentVideo=null;state.currentVideo=null;setTimeout(()=>mini?.remove(),230);}if(action==="menu")showPlayerMenu();if(action==="editInfo")editCurrentInfo();if(action==="subtitles"){openSubtitlePicker();return;}if(action==="lock"){toggleScreenLock();return;}if(action==="screenshot"){captureFrame();return;}if(action==="subtitleStyle"){openSubtitleStyle();return;}if(action==="playbackMode"){cyclePlaybackMode();return;}if(action==="audioMode"){openAudioModeDialog();return;}if(action==="audio")alert("La selección de pistas estará disponible cuando el archivo incluya varias.");if(action==="speed"&&video){openSpeedPicker(video);return;}}
 document.addEventListener("fullscreenchange",()=>{applyAmbientLight();const active=!!document.fullscreenElement;const btn=document.getElementById("fullscreenToggle");if(btn){btn.innerHTML=active?svgExitFullscreen:svgExpand;btn.setAttribute("aria-label",active?"Salir de pantalla completa":"Pantalla completa");}if(!active&&screen.orientation&&screen.orientation.unlock)screen.orientation.unlock();});
 picker.addEventListener("change",async e=>{await importFiles(e.target.files);picker.value="";});
 async function readDeviceFolder(){if(window.showDirectoryPicker){try{const dir=await window.showDirectoryPicker({mode:"read"});const files=[];async function walk(handle,path=""){for await(const entry of handle.values()){const entryPath=path?path+"/"+entry.name:entry.name;if(entry.kind==="directory")await walk(entry,entryPath);else if(entry.kind==="file"){const file=await entry.getFile();if(isVideoFile(file))files.push({file,relativePath:entryPath});}}}await walk(dir);const count=await importFiles(files);if(!count&&!files.length)alert("No se encontraron vídeos en esa carpeta.");return;}catch(err){if(err&&err.name==="AbortError")return;console.warn("No se pudo leer la carpeta",err);}}const fp=document.getElementById("folderPicker");if(fp)fp.click();else alert("Este navegador no permite seleccionar carpetas. Usa Añadir vídeos.");}
@@ -254,3 +256,52 @@ if("serviceWorker"in navigator&&location.protocol.startsWith("http")){
     }catch(error){console.warn("No se pudo activar el modo PWA:",error);}
   });
 }
+// Android hardware/system back integration (Capacitor).
+document.addEventListener("astral:android-back",()=>{
+ const openDialog=document.querySelector("dialog[open]");
+ if(openDialog){openDialog.close();openDialog.remove();return;}
+ const menu=document.getElementById("playerActionMenu");if(menu){menu.remove();return;}
+ if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});return;}
+ if(state.page==="player"){state.page=state.lastPage||"library";render();return;}
+ if(state.page==="settings"||state.page==="library"||state.page==="activity"||state.page==="profile"){state.page=state.mode==="local"?"explore":"home";render();return;}
+ if(state.page==="explore"||state.page==="home"){document.dispatchEvent(new CustomEvent("astral:android-exit-request"));}
+});
+
+
+// Actualizaciones: el feed remoto solo muestra versiones superiores a la instalada.
+function compareAppVersions(a,b){
+ const left=String(a||"0").split(/[.+-]/).map(Number),right=String(b||"0").split(/[.+-]/).map(Number);
+ for(let i=0;i<Math.max(left.length,right.length);i++){const x=Number.isFinite(left[i])?left[i]:0,y=Number.isFinite(right[i])?right[i]:0;if(x!==y)return x-y;}
+ return 0;
+}
+function closeUpdateDialog(){
+ const dialog=document.getElementById("astralUpdateDialog");
+ if(dialog?.open)dialog.close();
+ dialog?.remove();
+}
+function showUpdateDialog(update){
+ if(document.getElementById("astralUpdateDialog"))return;
+ const notes=Array.isArray(update.highlights)?update.highlights:[];
+ const dialog=document.createElement("dialog");
+ dialog.id="astralUpdateDialog";
+ dialog.className="app-update-dialog";
+ dialog.innerHTML='<div class="update-orbit" aria-hidden="true"><span>✦</span></div><p class="eyebrow">NUEVA VERSIÓN DISPONIBLE</p><h2>Actualización '+esc(update.latestVersion)+'</h2><p class="update-summary">'+esc(update.summary||"AstralWorld tiene novedades para ti.")+'</p><div class="update-highlights">'+notes.map(note=>'<div><span>✦</span><p>'+esc(note)+'</p></div>').join("")+'</div><p class="update-source-label">¿Dónde deseas actualizar?</p><div class="update-source-actions"><a class="update-source-button update-noverse" href="'+esc(update.noverseUrl||"https://jhooni467.github.io/Noverse/")+'" target="_blank" rel="noopener noreferrer"><span>✦</span><span><strong>En Noverse</strong><small>Marketplace de Noverse</small></span><b>↗</b></a><a class="update-source-button" href="'+esc(update.githubUrl||"https://github.com/jhooni467/AstralWorld/releases")+'" target="_blank" rel="noopener noreferrer"><span>⌘</span><span><strong>En GitHub</strong><small>Versiones y archivos oficiales</small></span><b>↗</b></a></div><button class="update-later" type="button" data-update-later>Actualizar más tarde</button><small class="update-version-note">Versión instalada: '+APP_VERSION+'</small>';
+ document.body.appendChild(dialog);
+ dialog.querySelector("[data-update-later]").addEventListener("click",()=>{try{localStorage.setItem("astralworld-update-dismissed",String(update.latestVersion));}catch(error){}closeUpdateDialog();});
+ dialog.addEventListener("click",event=>{if(event.target===dialog){try{localStorage.setItem("astralworld-update-dismissed",String(update.latestVersion));}catch(error){}closeUpdateDialog();}});
+ dialog.showModal();
+}
+async function checkForAppUpdates(){
+ if(!window.Capacitor?.isNativePlatform?.())return;
+ try{
+  const response=await fetch(UPDATE_FEED_URL,{cache:"no-store",headers:{"Accept":"application/json"}});
+  if(!response.ok)throw new Error("Feed de actualizaciones no disponible ("+response.status+").");
+  const update=await response.json();
+  if(!update||!update.latestVersion||compareAppVersions(update.latestVersion,APP_VERSION)<=0)return;
+  let dismissed="";try{dismissed=localStorage.getItem("astralworld-update-dismissed")||"";}catch(error){}
+  if(dismissed===String(update.latestVersion))return;
+  if(update.minimumVersion&&compareAppVersions(APP_VERSION,update.minimumVersion)<0)update.summary=(update.summary||"Hay una actualización importante.")+" Esta versión es necesaria para continuar usando AstralWorld.";
+  showUpdateDialog(update);
+ }catch(error){console.info("No se pudo comprobar si hay actualizaciones:",error);}
+}
+window.addEventListener("load",()=>{window.setTimeout(checkForAppUpdates,1800);},{once:true});

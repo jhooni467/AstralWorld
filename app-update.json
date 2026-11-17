@@ -1,0 +1,14 @@
+{
+  "appId": "com.noverse.astralworld",
+  "appName": "AstralWorld",
+  "currentVersion": "1.00",
+  "latestVersion": "1.00",
+  "minimumVersion": "1.00",
+  "summary": "AstralWorld se está preparando para su distribución como aplicación Android nativa.",
+  "highlights": [
+    "Base inicial de integración con Android y Capacitor.",
+    "Preparación de la experiencia de instalación y actualización."
+  ],
+  "noverseUrl": "https://jhooni467.github.io/Noverse/",
+  "githubUrl": "https://github.com/jhooni467/AstralWorld/releases"
+}
