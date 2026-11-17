@@ -12,5 +12,6 @@
  if(App?.addListener){App.addListener("backButton",()=>document.dispatchEvent(new CustomEvent("astral:android-back")));App.addListener("appStateChange",({isActive})=>{if(!isActive)document.dispatchEvent(new Event("pagehide"));});}
  document.addEventListener("astral:android-exit-request",()=>{if(App?.exitApp)App.exitApp();});
  document.addEventListener("DOMContentLoaded",updateNativeUi,{once:true});
- window.astralNative={setStatusBar,setOrientation,};
+ const pickVideos=()=>{const input=document.getElementById("videoPicker");if(!input)return;input.multiple=true;input.accept="video/*";input.click();};
+ window.astralNative={setStatusBar,setOrientation,pickVideos};
 })();
