@@ -1060,3 +1060,154 @@ body{min-height:100dvh!important}
 .video-stage{transition:box-shadow .16s linear!important}
 .video-atmosphere-canvas,.ambient-light-canvas{transition:opacity .18s ease-out,filter .18s ease-out!important;will-change:opacity}
 .video-stage.video-atmosphere-on{transition:box-shadow .16s linear!important}
+
+
+/* AstralWorld 1.03 · theme coverage pass: all surfaces use the active palette */
+:root[data-theme]{
+ --theme-panel:color-mix(in srgb,var(--steel) 48%,var(--night));
+ --theme-panel-strong:color-mix(in srgb,var(--steel) 72%,var(--night));
+ --theme-border:var(--line);
+ --theme-accent-soft:color-mix(in srgb,var(--aurora) 15%,var(--surface));
+ --theme-orbit:color-mix(in srgb,var(--aurora) 24%,transparent);
+}
+:root[data-theme] html,:root[data-theme] body,:root[data-theme] .app-shell,:root[data-theme] #appContent{
+ background-color:var(--night)!important;color:var(--text)!important;
+}
+:root[data-theme] .cinema-hero,
+:root[data-theme] .home-welcome,
+:root[data-theme] .cinema-feature,
+:root[data-theme] .online-hero,
+:root[data-theme] .home-collection-card,
+:root[data-theme] .collection-feature,
+:root[data-theme] .profile-card,
+:root[data-theme] .resume-strip,
+:root[data-theme] .shortcut,
+:root[data-theme] .settings-group,
+:root[data-theme] .media-row,
+:root[data-theme] .home-video-card,
+:root[data-theme] .cinema-card,
+:root[data-theme] .activity-entry,
+:root[data-theme] .player-info,
+:root[data-theme] .player-action,
+:root[data-theme] .collection-card,
+:root[data-theme] .queue-row,
+:root[data-theme] .collection-check{
+ background:linear-gradient(145deg,var(--theme-panel),var(--theme-card-end,var(--night)))!important;
+ border-color:var(--theme-border)!important;color:var(--text)!important;
+ box-shadow:none;
+}
+:root[data-theme] .cinema-hero:before,
+:root[data-theme] .cinema-hero:after,
+:root[data-theme] .home-welcome:before,
+:root[data-theme] .home-welcome:after,
+:root[data-theme] .hero-orbit,
+:root[data-theme] .home-video-art:before,
+:root[data-theme] .home-video-art:after,
+:root[data-theme] .cinema-art:before,
+:root[data-theme] .cinema-art:after{border-color:var(--theme-orbit)!important}
+:root[data-theme] .cinema-hero p,
+:root[data-theme] .home-welcome p,
+:root[data-theme] .page-intro,
+:root[data-theme] .settings-hint,
+:root[data-theme] .activity-entry-copy small,
+:root[data-theme] .activity-entry-copy time,
+:root[data-theme] .home-video-copy small,
+:root[data-theme] .media-copy small,
+:root[data-theme] .resume-copy small,
+:root[data-theme] .collection-card small{color:var(--muted)!important}
+:root[data-theme] .hero-kicker,
+:root[data-theme] .feature-kicker,
+:root[data-theme] .eyebrow,
+:root[data-theme] .text-button,
+:root[data-theme] .activity-entry-tag,
+:root[data-theme] .activity-entry-icon,
+:root[data-theme] .home-collection-icon,
+:root[data-theme] .shortcut-icon,
+:root[data-theme] .collection-symbol,
+:root[data-theme] .collection-arrow,
+:root[data-theme] .placeholder-symbol{color:var(--aurora)!important}
+:root[data-theme] .brand-mark,
+:root[data-theme] .hero-star,
+:root[data-theme] .online-hero-mark,
+:root[data-theme] .art-symbol{color:var(--solar)!important}
+:root[data-theme] .primary-button,
+:root[data-theme] .secondary-button,
+:root[data-theme] .player-edit-button,
+:root[data-theme] .player-more,
+:root[data-theme] .resume-icon-button,
+:root[data-theme] .icon-button,
+:root[data-theme] .round-button{
+ background:linear-gradient(115deg,var(--steel),var(--surface-raised,var(--aurora)))!important;
+ border-color:var(--line)!important;color:var(--text)!important;
+}
+:root[data-theme] .mode-switch,
+:root[data-theme] .search-field,
+:root[data-theme] .collection-dialog-list,
+:root[data-theme] .queue-list,
+:root[data-theme] .collection-list,
+:root[data-theme] .subtitle-style-grid{
+ background:var(--surface-soft)!important;border-color:var(--line)!important;color:var(--text)!important;
+}
+:root[data-theme] .mode-button.active,
+:root[data-theme] .setting-toggle.active,
+:root[data-theme] .theme-choice.active,
+:root[data-theme] .audio-mode-option.active,
+:root[data-theme] .speed-option.active{
+ background:var(--theme-button)!important;border-color:var(--aurora)!important;color:#fff!important;
+}
+:root[data-theme] .theme-choice,
+:root[data-theme] .audio-mode-option,
+:root[data-theme] .speed-option,
+:root[data-theme] .player-choice-dialog,
+:root[data-theme] .audio-mode-dialog,
+:root[data-theme] .subtitle-style-dialog,
+:root[data-theme] .resume-choice-dialog,
+:root[data-theme] .performance-warning{
+ background:linear-gradient(150deg,var(--theme-panel-strong),var(--night))!important;
+ border-color:var(--line)!important;color:var(--text)!important;
+}
+:root[data-theme] .app-update-dialog{
+ background:linear-gradient(155deg,var(--theme-panel-strong),var(--night))!important;
+ border-color:var(--line)!important;color:var(--text)!important;
+}
+:root[data-theme] .update-orbit,
+:root[data-theme] .update-highlights,
+:root[data-theme] .update-source-button{
+ background:var(--surface-soft)!important;border-color:var(--line)!important;color:var(--text)!important;
+}
+:root[data-theme] .update-orbit,
+:root[data-theme] .update-source-button>span:first-child,
+:root[data-theme] .update-highlights span{color:var(--aurora)!important}
+:root[data-theme] .tag,
+:root[data-theme] .activity-entry-icon,
+:root[data-theme] .home-collection-icon,
+:root[data-theme] .resume-art{
+ background:var(--surface-raised)!important;color:var(--aurora)!important;border-color:var(--line)!important;
+}
+:root[data-theme] .progress-track,
+:root[data-theme] .continue-progress{background:color-mix(in srgb,var(--aurora) 20%,var(--surface))!important}
+:root[data-theme] .progress-track span,
+:root[data-theme] .continue-progress i{background:var(--aurora)!important}
+:root[data-theme] .player-control-line input{accent-color:var(--aurora)!important}
+:root[data-theme] .video-placeholder{background:radial-gradient(ellipse at center,var(--theme-panel-strong),var(--night) 75%)!important;color:var(--muted)!important}
+:root[data-theme] .empty-state{border-color:var(--line)!important}
+:root[data-theme] .empty-state .empty-icon{color:var(--aurora)!important}
+:root[data-theme] .media-thumb,
+:root[data-theme] .cinema-art,
+:root[data-theme] .home-video-art{
+ background:radial-gradient(ellipse at 68% 25%,var(--theme-glow),transparent 46%),linear-gradient(145deg,var(--steel),var(--night))!important;
+}
+:root[data-theme] .bottom-nav{background:var(--theme-nav)!important;border-color:var(--line)!important}
+:root[data-theme] .topbar{background:var(--theme-top)!important;border-color:var(--line)!important}
+:root[data-theme] button:focus-visible,:root[data-theme] a:focus-visible{outline-color:var(--aurora)!important}
+:root[data-theme] .player-choice-dialog::backdrop,
+:root[data-theme] .audio-mode-dialog::backdrop,
+:root[data-theme] .subtitle-style-dialog::backdrop,
+:root[data-theme] .resume-choice-dialog::backdrop,
+:root[data-theme] .performance-warning::backdrop{background:color-mix(in srgb,var(--night) 82%,transparent)!important}
+:root[data-theme] .video-stage{--ambient-glow:var(--aurora);--atmosphere-glow:var(--aurora)}
+:root[data-theme] .mini-player{border-color:var(--line)!important}
+:root[data-theme] .mini-player.ambient-mini-on::before{background:radial-gradient(ellipse at 18% 50%,var(--aurora),transparent 68%)!important}
+:root[data-theme] .mini-player.atmosphere-mini-on::after{border-color:var(--aurora)!important}
+:root[data-theme] *,:root[data-theme] *::before,:root[data-theme] *::after{transition-property:background-color,color,border-color,box-shadow,filter!important;transition-duration:.38s}
+@media(prefers-reduced-motion:reduce){:root[data-theme] *,:root[data-theme] *::before,:root[data-theme] *::after{transition-duration:.01ms!important}}
