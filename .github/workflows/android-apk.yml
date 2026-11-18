@@ -37,7 +37,7 @@ jobs:
       - name: Sync Capacitor Android project
         run: npx cap sync android
       - name: Set Android version
-        run: sed -i -E 's/versionCode [0-9]+/versionCode 100/; s/versionName .*/versionName "1.00"/' android/app/build.gradle
+        run: sed -i -E 's/versionCode [0-9]+/versionCode 101/; s/versionName .*/versionName "1.01"/' android/app/build.gradle
       - name: Build debug APK
         run: cd android && ./gradlew assembleDebug
       - name: Upload APK
@@ -51,13 +51,13 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.00
-          name: AstralWorld v1.00 — Android
+          tag_name: v1.01
+          name: AstralWorld v1.01 — Android
           body: |
-            AstralWorld v1.00 para Android.
+            AstralWorld v1.01 para Android.
 
             - APK instalable para pruebas.
-            - Integración Android con Capacitor.
+            - Integración Android con Capacitor.\n            - Corrección de activación del audio al reproducir vídeos en Android.
             - Importación de varios vídeos mediante el selector multimedia del sistema.
             - Pantalla de novedades con opciones de actualización desde Noverse o GitHub.
 
