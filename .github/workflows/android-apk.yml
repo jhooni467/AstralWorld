@@ -37,7 +37,7 @@ jobs:
       - name: Sync Capacitor Android project
         run: npx cap sync android
       - name: Set Android version
-        run: sed -i -E 's/versionCode [0-9]+/versionCode 102/; s/versionName .*/versionName "1.02"/' android/app/build.gradle
+        run: sed -i -E 's/versionCode [0-9]+/versionCode 103/; s/versionName .*/versionName "1.03"/' android/app/build.gradle
       - name: Build debug APK
         run: cd android && ./gradlew assembleDebug
       - name: Upload APK
@@ -51,10 +51,10 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.02
-          name: AstralWorld v1.02 — Android
+          tag_name: v1.03
+          name: AstralWorld v1.03 — Android
           body: |
-            AstralWorld v1.02 para Android.
+            AstralWorld v1.03 para Android.
 
             - APK instalable para pruebas.
             - Integración Android con Capacitor.
