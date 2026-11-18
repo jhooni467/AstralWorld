@@ -1,4 +1,4 @@
-const APP_VERSION = "1.02";
+const APP_VERSION = "1.03";
 const UPDATE_FEED_URL = "https://raw.githubusercontent.com/jhooni467/Noverse/main/updates.json";
 const state={mode:"local",page:"explore",videos:[],currentVideo:null,lastPage:"library",activity:[]};
 const DB_NAME="astralworld-library",DB_VERSION=2;
