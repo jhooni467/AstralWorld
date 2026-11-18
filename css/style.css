@@ -1053,3 +1053,10 @@ body{min-height:100dvh!important}
 .update-later{width:100%;min-height:43px;margin-top:12px;border:0;border-radius:13px;background:transparent;color:var(--muted);font:700 11px Manrope,sans-serif;cursor:pointer}
 .update-later:active{background:rgba(255,255,255,.06)}
 .update-version-note{display:block;margin-top:2px;color:var(--muted);font-size:9px;opacity:.75}
+
+
+/* AstralWorld 1.02 · imagen, respuesta táctil y efectos suaves */
+.video-stage video{transition:filter .22s ease-out!important}
+.video-stage{transition:box-shadow .16s linear!important}
+.video-atmosphere-canvas,.ambient-light-canvas{transition:opacity .18s ease-out,filter .18s ease-out!important;will-change:opacity}
+.video-stage.video-atmosphere-on{transition:box-shadow .16s linear!important}
