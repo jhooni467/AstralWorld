@@ -1,4 +1,4 @@
-const CACHE_NAME = "astralworld-shell-v23";
+const CACHE_NAME = "astralworld-shell-v26";
 const APP_FILES = [
   "./",
   "./index.html",
