@@ -57,7 +57,11 @@ jobs:
             AstralWorld v1.02 para Android.
 
             - APK instalable para pruebas.
-            - Integración Android con Capacitor.\n            - Corrección de activación del audio al reproducir vídeos en Android.\n            - Toque central para pausar y reanudar.\n            - Nuevos modos de imagen y mejora de la fluidez de Ambient Light y Video Atmosphere.\n            - Modo Música con Bass Boost moderado.
+            - Integración Android con Capacitor.
+            - Corrección de activación del audio al reproducir vídeos en Android.
+            - Toque central para pausar y reanudar.
+            - Nuevos modos de imagen y mejora de la fluidez de Ambient Light y Video Atmosphere.
+            - Modo Música con Bass Boost moderado.
             - Importación de varios vídeos mediante el selector multimedia del sistema.
             - Pantalla de novedades con opciones de actualización desde Noverse o GitHub.
 
